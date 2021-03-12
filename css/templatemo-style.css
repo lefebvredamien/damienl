@@ -47,10 +47,10 @@ footer .fp-tableCell
 
 /* start all heading */
 h1,h2,h3,h4,h5
-    {
-        color: #ffffff;
-        font-weight: bold;
-    }
+{
+    color: #ffffff;
+    font-weight: bold;
+}
 /* end all heading */
 
 /* start all section */
@@ -171,17 +171,27 @@ h1,h2,h3,h4,h5
 /* start home */       
 #home
 	{
-        background: url('../images/home-bg.jpg');
+        background: url('../images/rooftop.jpg');
         background-size: cover;
         background-repeat: no-repeat;
+        background-position: center;
         padding-top: 120px;
         padding-bottom: 140px;
         text-align: center;
 	}
+#home::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.5);
+}
 #home h1
     {
-        border: 2px solid #D43F52;
-        color: #D43F52;
+        border: 2px solid #bccef5;
+        color: #bccef5;
         display: inline-block;
         letter-spacing: 6px;
         padding: 25px 35px;
@@ -206,7 +216,7 @@ h1,h2,h3,h4,h5
     }
 #home .btn:hover
     {
-        background: #D43F52;
+        background: #bccef5;
         border-color: transparent;
     }
 /* end home */
@@ -230,7 +240,7 @@ h1,h2,h3,h4,h5
     {
         border: 2px solid #ffffff;
         border-radius: 50%;
-        color: #D43F52;
+        color: #bccef5;
         font-size: 24px;
         margin-right: 24px;
         width: 60px;
@@ -257,7 +267,7 @@ h1,h2,h3,h4,h5
 #about h4
     {
         padding: 15px 0;
-		color: #D43F52;
+		color: #bccef5;
     }
 #about .progress
     {
@@ -267,7 +277,7 @@ h1,h2,h3,h4,h5
     }
 #about .progress .progress-bar-danger
     {
-        background: #D43F52;
+        background: #bccef5;
     }
 #about .text-top
     {
@@ -305,7 +315,7 @@ h1,h2,h3,h4,h5
     }
 #portfolio .portfolio-thumb .portfolio-overlay
     {
-        background: #D43F52;
+        background: #bccef5;
         top: 0;
         left: 0;
         right: 0;
@@ -343,7 +353,7 @@ h1,h2,h3,h4,h5
     {
         border: 2px solid #ffffff;
         border-radius: 50%;
-        color: #D43F52;
+        color: #bccef5;
         width: 50px;
         height: 50px;
         line-height: 45px;
@@ -365,7 +375,7 @@ h1,h2,h3,h4,h5
     }
 #contact input[type="submit"]
     {
-        background: #D43F52;
+        background: #bccef5;
         border: 2px solid transparent;
         color: #ffffff;
         font-weight: bold;
@@ -374,7 +384,7 @@ h1,h2,h3,h4,h5
 #contact input[type="submit"]:hover
     {
         background: #ffffff;
-        color: #D43F52;
+        color: #bccef5;
     }
 /* end contact */
 
@@ -415,6 +425,40 @@ footer hr
     }
 .social-icon li a:hover
     {
-        color: #D43F52;
+        color: #bccef5;
     }
 /* end social icon */
+
+.number {
+    font: bold 24pt helvetica, arial, sans-serif;
+    color: #bccef5;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.social-icon {
+	padding: 0;
+	margin: 0;
+	/* text-align: center; */
+	vertical-align: middle;
+}
+.social-icon li {
+	list-style: none;
+	display: inline-block;
+}
+.social-icon li a {
+	background: #f8f8f8;
+	border-radius: 100%;
+	color: #bccef5;
+	font-size: 32px;
+	width: 80px;
+	height: 80px;
+	line-height: 80px;
+	/* text-align: center; */
+	text-decoration: none;
+	transition: all 0.4s ease-in-out;
+	margin: 0 6px 40px 6px;
+}
+.social-icon li a:hover {
+	background: #080808;
+}
