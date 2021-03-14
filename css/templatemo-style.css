@@ -6,10 +6,27 @@ https://templatemo.com/tm-458-lavish
 		
 */
 
+:root {
+    --bg-color: #ffffff;
+    --intelligence-color: #a4daef;
+    --section-color: #f2f2f2;
+    --border-color: #f2f2f2;
+    --heading-color: #000000;
+    --text-color: #000000;
+}
+
+[data-theme="dark"] {
+    --bg-color: #000000;
+    --intelligence-color: #a4daef;
+    --section-color: #1a1a1a;
+    --border-color: #1a1a1a;
+    --heading-color: #ffffff;
+    --text-color: #ffffff;
+}
+
 body
 {
-	background: #000000;
-	color: #999;
+	background: var(--bg-color);
 	font-family: 'Raleway', sans-serif;
 	font-size: 16px;
 	font-weight: 400;
@@ -48,16 +65,25 @@ footer .fp-tableCell
 /* start all heading */
 h1,h2,h3,h4,h5
 {
-    color: #ffffff;
+    color: var(--heading-color);
     font-weight: bold;
 }
 /* end all heading */
 
 /* start all section */
-#work, #about, #portfolio, #contact
+/* #work, #about, #portfolio, #contact */
+#work
     {
         padding-top: 100px;
         padding-bottom: 120px;
+    }
+#portfolio
+    {
+        padding-bottom: 120px;
+    }
+#about
+    {
+        padding-top: 100px;
     }
 /* end all section */
 
@@ -190,16 +216,17 @@ h1,h2,h3,h4,h5
 }
 #home h1
     {
-        border: 2px solid #bccef5;
-        color: #bccef5;
+        border: 2px solid var(--intelligence-color);
+        color: var(--intelligence-color);
         display: inline-block;
         letter-spacing: 6px;
         padding: 25px 35px;
         margin: 30px 0;
     }
-#home h2
+#home h2,h3
     {
         padding-bottom: 10px;
+        color: #ffffff;
     }
 #home .btn
     {
@@ -216,7 +243,7 @@ h1,h2,h3,h4,h5
     }
 #home .btn:hover
     {
-        background: #bccef5;
+        background: var(--intelligence-color);
         border-color: transparent;
     }
 /* end home */
@@ -224,7 +251,8 @@ h1,h2,h3,h4,h5
 /* start work */
 #work
     {
-        background: #1a1a1a;
+        background: var(--section-color);
+        color: var(--text-color);
     }
 #work h2
     {
@@ -240,7 +268,7 @@ h1,h2,h3,h4,h5
     {
         border: 2px solid #ffffff;
         border-radius: 50%;
-        color: #bccef5;
+        color: var(--intelligence-color);
         font-size: 24px;
         margin-right: 24px;
         width: 60px;
@@ -267,7 +295,7 @@ h1,h2,h3,h4,h5
 #about h4
     {
         padding: 15px 0;
-		color: #bccef5;
+		color: var(--intelligence-color);
     }
 #about .progress
     {
@@ -277,7 +305,7 @@ h1,h2,h3,h4,h5
     }
 #about .progress .progress-bar-danger
     {
-        background: #bccef5;
+        background: var(--intelligence-color);
     }
 #about .text-top
     {
@@ -300,11 +328,12 @@ h1,h2,h3,h4,h5
 /* start portfolio */
 #portfolio
     {
-        background: #1a1a1a;
+        background: var(--section-color);
         text-align: center;
     }
-#portfolio h2
+#portfolio h2,h4
     {
+        color: var(--heading-color);
         padding-bottom: 30px;
     }
 #portfolio .portfolio-thumb
@@ -313,9 +342,14 @@ h1,h2,h3,h4,h5
         position: relative;
         margin-bottom: 30px;
     }
+#portfolio img
+    {
+    height: 300px;
+    object-fit: cover;
+    }
 #portfolio .portfolio-thumb .portfolio-overlay
     {
-        background: #bccef5;
+        background: var(--section-color);
         top: 0;
         left: 0;
         right: 0;
@@ -353,7 +387,7 @@ h1,h2,h3,h4,h5
     {
         border: 2px solid #ffffff;
         border-radius: 50%;
-        color: #bccef5;
+        color: var(--intelligence-color);
         width: 50px;
         height: 50px;
         line-height: 45px;
@@ -375,7 +409,7 @@ h1,h2,h3,h4,h5
     }
 #contact input[type="submit"]
     {
-        background: #bccef5;
+        background: var(--intelligence-color);
         border: 2px solid transparent;
         color: #ffffff;
         font-weight: bold;
@@ -384,14 +418,15 @@ h1,h2,h3,h4,h5
 #contact input[type="submit"]:hover
     {
         background: #ffffff;
-        color: #bccef5;
+        color: var(--intelligence-color);
     }
 /* end contact */
 
 /* start footer */
 footer
     {
-        border-top: 1px solid #090909;
+        color: var(--text-color);
+        border-top: 1px solid var(--border-color);
         text-align: center;
         padding-top: 40px;
         padding-bottom: 20px;
@@ -425,13 +460,13 @@ footer hr
     }
 .social-icon li a:hover
     {
-        color: #bccef5;
+        color: var(--intelligence-color);
     }
 /* end social icon */
 
 .number {
     font: bold 24pt helvetica, arial, sans-serif;
-    color: #bccef5;
+    color: var(--intelligence-color);
     position: relative;
     margin-bottom: 20px;
 }
@@ -449,16 +484,76 @@ footer hr
 .social-icon li a {
 	background: #f8f8f8;
 	border-radius: 100%;
-	color: #bccef5;
+	color: var(--intelligence-color);
 	font-size: 32px;
-	width: 80px;
-	height: 80px;
-	line-height: 80px;
+	width: 60px;
+	height: 60px;
+	line-height: 60px;
 	/* text-align: center; */
 	text-decoration: none;
 	transition: all 0.4s ease-in-out;
 	margin: 0 6px 40px 6px;
 }
 .social-icon li a:hover {
-	background: #080808;
+	background: var(--background-color);
 }
+
+/*slider switch css */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    
+    em {
+      margin-left: 10px;
+      font-size: 1rem;
+    }
+  }
+  .theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+  }
+  
+  .theme-switch input {
+    display:none;
+  }
+  
+  .slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+  }
+  
+  input:checked + .slider {
+    background-color: #66bb6a;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  
