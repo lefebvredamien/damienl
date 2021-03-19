@@ -21,7 +21,7 @@ function getYearsDiff(date1, date2) {
 
 	var days = diff / day;
 	var months = days / 31;
-	var years = (months / 12).toFixed(1);
+	var years = Math.round(months / 6) / 2;
 
 	return years
 }

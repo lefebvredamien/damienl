@@ -74,7 +74,7 @@ h1,h2,h3,h4,h5
 /* #work, #about, #portfolio, #contact */
 #work
     {
-        padding-top: 100px;
+        padding-top: 60px;
         padding-bottom: 120px;
     }
 #portfolio
@@ -281,7 +281,6 @@ h1,h2,h3,h4,h5
 #work .media .fa:hover
     {
         background: #ffffff;
-        cursor: pointer;
     }
 #work .media .media-heading
     {
