@@ -1,4 +1,35 @@
 (function () {
+    function getPassword() {
+        return String.fromCharCode(77, 97, 114, 99, 111);
+    }
+
+    function promptPassword(message) {
+        const correctPassword = getPassword();
+        const password = prompt(message);
+        
+        if (password === null) {
+            return false;
+        }
+        
+        if (password !== correctPassword) {
+            alert('Incorrect password. Please try again.');
+            return false;
+        }
+        
+        return true;
+    }
+
+    function createPasswordProtectedLink(link, promptMessage) {
+        return function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (promptPassword(promptMessage)) {
+                window.open(link, '_blank');
+            }
+        };
+    }
+
     function loadContent() {
         if (typeof siteContent === 'undefined') {
             console.error('content.js not loaded');
@@ -143,24 +174,7 @@
                     el.href = '#';
                     el.style.display = 'inline-block';
 
-                    el.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        const correctPassword = String.fromCharCode(77, 97, 114, 99, 111);
-                        const password = prompt('Please enter the password to access the PDF:');
-                        
-                        if (password === null) {
-                            return;
-                        }
-                        
-                        if (password !== correctPassword) {
-                            alert('Incorrect password. Please try again.');
-                            return;
-                        }
-
-                        window.open(book.pdfLink, '_blank');
-                    }, true);
+                    el.addEventListener('click', createPasswordProtectedLink(book.pdfLink, 'Please enter the password to access the PDF:'), true);
                 } else {
                     el.style.display = 'none';
                 }
@@ -220,9 +234,9 @@
 
         const predictionsGrid = document.getElementById('predictions-grid');
         if (predictionsGrid && siteContent.predictions) {
-            predictionsGrid.innerHTML = siteContent.predictions.map(prediction => `
-                <div class="prediction">
-                    <div class="prediction-cover">
+            predictionsGrid.innerHTML = siteContent.predictions.map((prediction, index) => `
+                <div class="prediction" data-prediction-id="${prediction.id}">
+                    <div class="prediction-cover" ${prediction.link ? 'style="cursor: pointer;"' : ''}>
                         <div class="coming-soon">Coming Soon</div>
                     </div>
                     <div class="prediction-info">
@@ -231,6 +245,18 @@
                     </div>
                 </div>
             `).join('');
+
+            siteContent.predictions.forEach(prediction => {
+                if (prediction.link) {
+                    const predictionElement = predictionsGrid.querySelector(`[data-prediction-id="${prediction.id}"]`);
+                    if (predictionElement) {
+                        const coverElement = predictionElement.querySelector('.prediction-cover');
+                        if (coverElement) {
+                            coverElement.addEventListener('click', createPasswordProtectedLink(prediction.link, 'Please enter the password to access the prediction:'), true);
+                        }
+                    }
+                }
+            });
         }
 
         const currentPath = window.location.pathname;
