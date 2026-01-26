@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Enchanted Forest - Damien Lefebvre</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <style>
+        .container {
+            max-width: 1200px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 3rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .book-content {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 4rem;
+            align-items: start;
+            margin-bottom: 4rem;
+        }
+
+        .book-details {
+            min-width: 0;
+        }
+
+        .book-cover {
+            width: 100%;
+            aspect-ratio: 2/3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .book-cover.coming-soon-cover {
+            background: linear-gradient(135deg, var(--coming-soon-color-1) 0%, var(--coming-soon-color-2) 100%);
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .coming-soon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .book-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .book-details h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .book-year {
+            font-size: 1rem;
+            color: var(--text-quaternary);
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .book-summary {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: none;
+            width: 100%;
+        }
+
+        .pdf-link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .pdf-link:hover {
+            background: var(--card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .book-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .book-cover {
+                max-width: 250px;
+                margin: 0 auto;
+            }
+
+            .book-details h1 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .book-year {
+                text-align: center;
+            }
+
+            .book-summary {
+                text-align: center;
+            }
+
+            .pdf-link {
+                display: block;
+                text-align: center;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div class="container">
+        <a href="books.html" class="back-link">← Back to Books</a>
+
+        <div class="book-content">
+            <div class="book-cover">
+                <img data-content="book-cover" data-book-id="book1" alt="" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)';">
+            </div>
+
+            <div class="book-details">
+                <h1 data-content="book-title" data-book-id="book1"></h1>
+                <p class="book-year" data-content="book-year" data-book-id="book1"></p>
+                <div class="book-summary" data-content="book-summary" data-book-id="book1"></div>
+                <a href="#" data-content="pdf-link" data-book-id="book1" target="_blank" class="pdf-link">Read PDF</a>
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer-social-placeholder"></div>
+            <p>&copy; <span id="copyright-year"></span></p>
+        </footer>
+    </div>
+    <script src="js/theme.js"></script>
+    <script src="js/background-interactive.js"></script>
+    <script src="js/header-content.js"></script>
+    <script src="js/load-header.js"></script>
+    <script src="js/content.js"></script>
+    <script src="js/load-content.js"></script>
+    <script src="js/load-footer.js"></script>
+    <script>
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

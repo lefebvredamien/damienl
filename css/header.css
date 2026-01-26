@@ -1,0 +1,189 @@
+#header-placeholder {
+    width: 100%;
+    height: 60px;
+}
+
+:root {
+    --header-bg: rgba(10, 10, 10, 0.5);
+    --header-border: rgba(255, 255, 255, 0.1);
+    --nav-link-color: rgba(255, 255, 255, 0.6);
+    --nav-link-hover: rgba(255, 255, 255, 1);
+    --contact-link-bg: rgba(255, 255, 255, 0.05);
+    --contact-link-border: rgba(255, 255, 255, 0.2);
+    --contact-link-color: rgba(255, 255, 255, 0.7);
+    --contact-link-hover-border: rgba(255, 255, 255, 0.4);
+    --text-primary: #fff;
+    --text-tertiary: rgba(255, 255, 255, 0.6);
+}
+
+.theme-light {
+    --header-bg: rgba(250, 250, 250, 0.8);
+    --header-border: rgba(0, 0, 0, 0.1);
+    --nav-link-color: rgba(0, 0, 0, 0.6);
+    --nav-link-hover: rgba(0, 0, 0, 1);
+    --contact-link-bg: rgba(0, 0, 0, 0.03);
+    --contact-link-border: rgba(0, 0, 0, 0.2);
+    --contact-link-color: rgba(0, 0, 0, 0.7);
+    --contact-link-hover-border: rgba(0, 0, 0, 0.4);
+    --text-primary: #1a1a1a;
+    --text-tertiary: rgba(0, 0, 0, 0.6);
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0.8rem 2rem;
+    background: var(--header-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--header-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: 0;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+}
+
+header h1 a {
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: opacity 0.3s ease;
+    display: inline-block;
+}
+
+header h1 a:hover {
+    opacity: 0.8;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.header-contact {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    color: var(--nav-link-hover);
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--text-tertiary);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.contact-link {
+    color: var(--contact-link-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--contact-link-border);
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+    background: var(--contact-link-bg);
+}
+
+.contact-link:hover {
+    color: var(--text-primary);
+    border-color: var(--contact-link-hover-border);
+    transform: translateY(-1px);
+}
+
+.contact-link svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+}
+
+
+@media (max-width: 768px) {
+    #header-placeholder {
+        height: 100px;
+    }
+
+    header {
+        padding: 0.8rem 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    .header-content {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        justify-content: flex-start;
+    }
+
+    nav {
+        gap: 1.5rem;
+    }
+
+    .header-contact {
+        gap: 0.8rem;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .contact-link {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.7rem;
+    }
+}

@@ -1,253 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damien Lefebvre</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <style>
 
-	<title>Damien Lefebvre</title>
-	<meta name="keywords" content="">
-	<meta name="description" content="">
-	<meta name="author" content="templatemo">
-	<!-- 
-        Lavish HTML CSS Template
-        https://templatemo.com/tm-458-lavish
-        -->
+        body {
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
 
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+        .container {
+            width: 100%;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+        }
 
-	<!-- animate -->
-	<link rel="stylesheet" href="css/animate.min.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<!-- font-awesome -->
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<!-- google font -->
-	<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700,800' rel='stylesheet' type='text/css'>
-	<!-- fullpage -->
-	<link rel="stylesheet" href="css/jquery.fullPage.css">
-	<!-- custom -->
-	<link rel="stylesheet" href="css/templatemo-style.css">
+        #home,
+        #timeline {
+            position: relative;
+        }
 
-	<link rel="alternate icon" class="js-site-favicon" type="image/png"
-		href="https://github.githubassets.com/favicons/favicon.png">
-	<link rel="icon" class="js-site-favicon" type="image/svg+xml"
-		href="https://github.githubassets.com/favicons/favicon.svg">
+        #home {
+            min-height: 100vh;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 0;
+        }
 
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-T8VXW500C4"></script>
-	<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
+        .home-content {
+            display: grid;
+            grid-template-columns: minmax(250px, 400px) 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
 
-	gtag('config', 'G-T8VXW500C4');
-	</script>
+        .author-photo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
 
+        .author-photo {
+            width: 100%;
+            max-width: 400px;
+            max-height: calc(100vh - 8rem);
+            aspect-ratio: 2/3;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            object-fit: contain;
+        }
+
+        @media (max-height: 800px) {
+            .author-photo {
+                max-height: calc(100vh - 10rem);
+            }
+        }
+
+        @media (max-height: 600px) {
+            .author-photo {
+                max-height: calc(100vh - 12rem);
+            }
+        }
+
+        .scroll-arrow-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .scroll-arrow-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .scroll-arrow-container:hover {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        .scroll-arrow svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--text-secondary);
+            transition: stroke 0.3s ease;
+        }
+
+        .scroll-arrow-container:hover svg {
+            stroke: var(--text-primary);
+        }
+
+        .home-right-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .home-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .author-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .author-photo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        #timeline {
+            min-height: 100vh;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            margin-bottom: 0;
+            margin-top: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #timeline.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .timeline-section {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .journey-subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .journey-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .journey-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .journey-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 400px;
+            max-width: calc(50% - 3rem);
+            position: relative;
+        }
+
+
+        .journey-item-left {
+            flex-direction: row;
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .journey-item-right {
+            flex-direction: row-reverse;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .journey-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-hover);
+            background: var(--card-hover);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .journey-item-left:hover {
+            transform: translateX(6px) translateY(-2px);
+        }
+
+        .journey-item-right:hover {
+            transform: translateX(-6px) translateY(-2px);
+        }
+
+        .journey-image {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .journey-image:empty {
+            display: none;
+        }
+
+        .journey-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .journey-content {
+            flex: 1;
+        }
+
+        .journey-item-left .journey-content {
+            text-align: left;
+        }
+
+        .journey-item-right .journey-content {
+            text-align: right;
+        }
+
+        .journey-main {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+            transition: color 0.3s ease;
+        }
+
+        .journey-item:hover .journey-main {
+            color: var(--text-primary);
+        }
+
+        .journey-heading {
+            font-weight: 500;
+        }
+
+        .journey-secondary {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: var(--text-tertiary);
+            transition: color 0.3s ease;
+        }
+
+        .journey-item:hover .journey-secondary {
+            color: var(--text-secondary);
+        }
+
+        .journey-timeframe {
+            font-weight: 400;
+            margin-right: 1rem;
+        }
+
+        .journey-location {
+            font-weight: 300;
+        }
+
+        .home-bottom-link {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 0;
+        }
+
+        .home-bottom-link a {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-decoration: underline;
+            text-underline-offset: 0.3em;
+            transition: color 0.3s ease;
+            font-weight: 300;
+        }
+
+        .home-bottom-link a:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            #home,
+            #timeline {
+                padding: 1.5rem;
+            }
+
+            .home-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .author-photo {
+                max-width: 300px;
+                max-height: calc(100vh - 10rem);
+                margin: 0 auto;
+            }
+
+            .home-text {
+                text-align: center;
+            }
+
+            .scroll-arrow-container {
+                bottom: 1.5rem;
+            }
+
+            .timeline-section {
+                padding: 0;
+            }
+
+            .journey-container {
+                padding: 0 1rem;
+            }
+
+            .timeline-line {
+                display: none;
+            }
+
+            .journey-item {
+                flex-direction: column !important;
+                align-items: center;
+                text-align: center;
+                max-width: 100%;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+
+            .journey-content {
+                text-align: center !important;
+            }
+
+            .journey-image {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-height: 700px) and (min-width: 769px) {
+            .author-photo {
+                max-height: calc(100vh - 12rem);
+            }
+
+            .home-content {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-height: 500px) {
+            .author-photo {
+                max-height: calc(100vh - 14rem);
+            }
+
+            #home {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div id="header-placeholder"></div>
+    <div class="container">
 
-	<div id="fullpage">
+        <section id="home">
+            <div class="home-content">
+                <div class="author-photo-container">
+                    <div class="author-photo">
+                        <img data-content="author-photo" alt="" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)';">
+                    </div>
+                </div>
+                <div class="home-right-column">
+                    <div class="home-text">
+                        <p data-content="author-description"></p>
+                        <p data-content="author-description" style="margin-top: 1.5rem;"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-		<!-- start home -->
-		<div id="home" class="section">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-2"></div>
-					<div class="col-md-8 wow fadeIn" data-wow-delay="0.9s">
-						<h3>Damien Lefebvre</h3>
-						<h2 class="rotate">TRADER, QUANT DEVELOPER, RESEARCHER</h2>
-						<h4 style="color: #ffffff;">Quant execution trader with experience in time-series analysis,
-							predictive modeling and systematic trading.</h4>
-						<!-- <a href="#work" class="btn btn-default smoothScroll wow fadeInUp" data-wow-delay="1s">Read
-							more</a> -->
-					</div>
-					<div class="col-md-2"></div>
-				</div>
-			</div>
-		</div>
-		<!-- end home -->
+        <div class="scroll-arrow-container" id="scroll-arrow">
+            <div class="scroll-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </div>
+        </div>
 
-		<!-- start work -->
-		<div id="work" class="section">
-			<div class="container">
-				<div style="float: right">
-					<ul class="social-icon">
-						<li><a class="fa fa-envelope wow bounceIn" data-wow-delay="0.2s"
-								href="mailto:damienrlefebvre@ucla.edu"></a></li>
-						<li>
-							<a class="fa fa-phone wow bounceIn" data-wow-delay="0.4s" id="phone_tooltip"
-								data-toggle="tooltip" data-placement="bottom" title="+1 (310) 923-2134"></a>
-						</li>
-						<li><a class="fa fa-linkedin wow bounceIn" data-wow-delay="0.6s"
-								href="https://www.linkedin.com/in/lefebvredamien"></a></li>
-						<li><a class="fa fa-github wow bounceIn" data-wow-delay="0.8s"
-								href="https://github.com/lefebvredamien"></a></li>
-					</ul>
-				</div>
+        <section id="timeline">
+            <div class="timeline-section">
+                <h2 class="journey-subtitle">My journey</h2>
+                <div class="journey-container">
+                    <div class="timeline-line"></div>
+                    <ul class="journey-list" id="journey-list"></ul>
+                </div>
+                <div class="home-bottom-link">
+                    <a href="" data-content="work-link"></a>
+                </div>
+            </div>
+        </section>
 
-				<div class="row">
-					<div class="col-md-12 wow bounce">
-						<h2>BACKGROUND</h2>
-					</div>
-				</div>
+        <footer>
+            <div id="footer-social-placeholder"></div>
+            <p>&copy; <span id="copyright-year"></span></p>
+        </footer>
+    </div>
+    <script src="js/theme.js"></script>
+    <script src="js/background-interactive.js"></script>
+    <script src="js/header-content.js"></script>
+    <script src="js/load-header.js"></script>
+    <script src="js/content.js"></script>
+    <script src="js/load-content.js"></script>
+    <script src="js/load-footer.js"></script>
+    <script>
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
-				<div class="row text-center">
-					<p>Bachelor of Science in Mathematics of Computation - UCLA, Class of 2019</p>
-					<p>Execution Trader, WorldQuant - New York City, 2019-2021</p>
-					<p>Trader, DRW - Chicago, 2021-Present</p>
-				</div>
+        (function() {
+            const scrollArrow = document.getElementById('scroll-arrow');
+            const homeSection = document.getElementById('home');
+            const timelineSection = document.getElementById('timeline');
 
-				<div class="row">
-					<div class="col-md-4 col-xs-11 wow fadeInUp" data-wow-delay="0.6s">
-						<div class="media">
-							<div class="media-object media-left">
-								<i class="fa fa-superscript"></i>
-							</div>
-							<div class="media-body">
-								<div id="counter">
-									<h3 class="media-heading">
-										<!-- undergraduate: 28 graduate: 7 -->
-										<div class="counter-value number" data-count="35">0</div>
-									</h3>
-								</div>
-								<p>math, stats and CS classes taken at the undergraduate and graduate level.</p>
-							</div>
-						</div>
-					</div>
+            function showTimeline() {
+                if (timelineSection) {
+                    timelineSection.classList.add('visible');
+                }
+            }
 
-					<div class="col-md-4 col-xs-11 wow fadeInUp" data-wow-delay="0.6s">
-						<div class="media">
-							<div class="media-object media-left">
-								<i class="fa fa-code"></i>
-							</div>
-							<div class="media-body">
-								<div id="counter">
-									<h3 class="media-heading">
-										<div class="counter-value number" data-count="17000">0</div>
-									</h3>
-								</div>
-								<p>lines of code written, tested and deployed in production.</p>
-							</div>
-						</div>
-					</div>
+            function updateArrowVisibility() {
+                if (!scrollArrow || !timelineSection) return;
 
-					<div class="col-md-4 col-xs-11 wow fadeInUp" data-wow-delay="0.6s">
-						<div class="media">
-							<div class="media-object media-left">
-								<i class="fa fa-laptop"></i>
-							</div>
-							<div class="media-body">
-								<div id="counter">
-									<h3 class="media-heading">
-										<div class="counter-value number" id="years_working">0</div>
-									</h3>
-								</div>
-								<p>years of experience in trading Equities, Futures & FX globally.</p>
-							</div>
-						</div>
-					</div>
+                const timelineTop = timelineSection.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (timelineTop <= windowHeight * 0.3) {
+                    scrollArrow.classList.add('hidden');
+                } else {
+                    scrollArrow.classList.remove('hidden');
+                }
+            }
 
-				</div>
-			</div>
-		</div>
-		<!-- end work -->
+            function checkScrollVisibility() {
+                if (!timelineSection) return;
+                
+                const timelineTop = timelineSection.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (timelineTop < windowHeight * 0.5 && timelineTop > -windowHeight * 0.5) {
+                    showTimeline();
+                }
+            }
 
-		<!-- start portfolio -->
-		<div id="portfolio" class="section">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<h2 class="wow bounce">PORTFOLIO</h2>
-					</div>
-					<div class="col-md-4 col-xs-6 wow fadeIn" data-wow-delay="0.6s">
-						<div class="portfolio-thumb">
-							<img src="images/notebook.png" class="img-responsive" alt="portfolio img">
-							<a href="https://github.com/lefebvredamien/research">
-								<div class="portfolio-overlay">
-									<h4>Alpha research</h4>
-									<h5>Jupyter notebooks on GitHub</h5>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-md-4 col-xs-6 wow fadeIn" data-wow-delay="0.6s">
-						<div class="portfolio-thumb">
-							<img src="images/lens_logo.png" class="img-responsive" alt="portfolio img">
-							<a href="https://getlens.herokuapp.com/">
-								<div class="portfolio-overlay">
-									<h4>Lens</h4>
-									<h5>AI platform on Heroku</h5>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-md-4 col-xs-6 wow fadeIn" data-wow-delay="0.6s">
-						<div class="portfolio-thumb">
-							<img src="images/intelligence_test_logo.png" class="img-responsive" alt="portfolio img">
-							<div class="portfolio-overlay">
-								<h4>Brainteasers book</h4>
-								<h5>Coming soon on Amazon</h5>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-xs-6 wow fadeIn" data-wow-delay="0.6s">
-						<div class="portfolio-thumb">
-							<img src="images/intprep.png" class="img-responsive" alt="portfolio img">
-							<a href="https://intprep.weebly.com/">
-								<div class="portfolio-overlay">
-									<h4>IntPrep</h4>
-									<h5>Interview problems on YouTube</h5>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- end portfolio -->
+            scrollArrow.addEventListener('click', function() {
+                showTimeline();
+                timelineSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
 
-		<!-- start footer -->
-		<footer>
-			<div class="container">
-				<div class="row">
-					<div class="theme-switch-wrapper">
-						<label class="theme-switch" for="checkbox">
-							<input type="checkbox" id="checkbox" />
-							<div class="slider round"></div>
-						</label>
-						&nbsp;
-						<i class="fa fa-adjust"></i>
-					</div>
-					<div class="col-md-12 wow fadeIn" data-wow-delay="0.9s">
-						<p>Copyright &copy; 2021. Initial template by <a rel="nofollow noopener"
-								href="https://templatemo.com">templatemo</a></p>
-						<hr>
-					</div>
-				</div>
-			</div>
-		</footer>
-		<!-- end footer -->
-
-	</div>
-
-	<!-- jQuery -->
-	<script src="js/jquery.js"></script>
-	<!-- bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- fullpage -->
-	<script src="js/jquery.fullPage.js"></script>
-	<!-- smoothScroll -->
-	<script src="js/smoothscroll.js"></script>
-	<!-- wow -->
-	<script src="js/wow.min.js"></script>
-	<!-- text rotater -->
-	<script src="js/jquery.simple-text-rotator.js"></script>
-	<!-- custom -->
-	<script src="js/custom.js"></script>
-
+            window.addEventListener('scroll', function() {
+                updateArrowVisibility();
+                checkScrollVisibility();
+            });
+            window.addEventListener('resize', function() {
+                updateArrowVisibility();
+                checkScrollVisibility();
+            });
+            updateArrowVisibility();
+            checkScrollVisibility();
+        })();
+    </script>
 </body>
-
 </html>
