@@ -17,6 +17,23 @@
             text-align: center;
         }
 
+        .predictions-blurb {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .predictions-blurb p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
         .predictions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -51,6 +68,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .prediction-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .prediction-cover::after {
@@ -98,6 +122,15 @@
         }
 
         @media (max-width: 768px) {
+            .predictions-blurb {
+                padding: 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .predictions-blurb p {
+                font-size: 1rem;
+            }
+
             .predictions-grid {
                 grid-template-columns: 1fr;
                 gap: 4rem;
@@ -114,6 +147,7 @@
     <div class="container">
 
         <section>
+            <div class="predictions-blurb" id="predictions-blurb"></div>
             <div class="predictions-grid" id="predictions-grid"></div>
         </section>
 

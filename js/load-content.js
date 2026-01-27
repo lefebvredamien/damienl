@@ -36,6 +36,20 @@
             return;
         }
 
+        const currentPath = window.location.pathname;
+        const currentFile = currentPath.split('/').pop() || 'index.html';
+        
+        if (currentFile.startsWith('book') && currentFile.endsWith('.html')) {
+            const bookId = currentFile.replace('.html', '');
+            const bookIdElements = document.querySelectorAll('[data-book-id]');
+            bookIdElements.forEach(el => {
+                const currentId = el.getAttribute('data-book-id');
+                if (!currentId || currentId === '') {
+                    el.setAttribute('data-book-id', bookId);
+                }
+            });
+        }
+
         const authorPhotoElements = document.querySelectorAll('[data-content="author-photo"]');
         authorPhotoElements.forEach(el => {
             if (siteContent.author.profileImage) {
@@ -97,6 +111,19 @@
                 }
             } else {
                 trilogyBlurb.innerHTML = '<p></p>';
+            }
+        }
+
+        const predictionsBlurb = document.getElementById('predictions-blurb');
+        if (predictionsBlurb && siteContent.predictions) {
+            if (siteContent.predictions.description) {
+                if (Array.isArray(siteContent.predictions.description)) {
+                    predictionsBlurb.innerHTML = siteContent.predictions.description.map(sentence => `<p>${sentence}</p>`).join('');
+                } else {
+                    predictionsBlurb.innerHTML = `<p>${siteContent.predictions.description}</p>`;
+                }
+            } else {
+                predictionsBlurb.innerHTML = '<p></p>';
             }
         }
 
@@ -233,20 +260,24 @@
         });
 
         const predictionsGrid = document.getElementById('predictions-grid');
-        if (predictionsGrid && siteContent.predictions) {
-            predictionsGrid.innerHTML = siteContent.predictions.map((prediction, index) => `
+        if (predictionsGrid && siteContent.predictions && siteContent.predictions.list) {
+            predictionsGrid.innerHTML = siteContent.predictions.list.map((prediction, index) => {
+                const hasCover = prediction.coverImage !== null && prediction.coverImage !== undefined;
+                return `
                 <div class="prediction" data-prediction-id="${prediction.id}">
                     <div class="prediction-cover" ${prediction.link ? 'style="cursor: pointer;"' : ''}>
-                        <div class="coming-soon">Coming Soon</div>
+                        ${hasCover ? `<img src="${prediction.coverImage}" alt="${prediction.title}" onerror="this.style.display='none'; this.parentElement.querySelector('.coming-soon').style.display='flex';">` : ''}
+                        ${!hasCover ? '<div class="coming-soon">Coming Soon</div>' : '<div class="coming-soon" style="display: none;">Coming Soon</div>'}
                     </div>
                     <div class="prediction-info">
                         <h2 class="prediction-title">${prediction.title}</h2>
-                        <p class="prediction-year">${prediction.year}</p>
+                        ${prediction.year ? `<p class="prediction-year">${prediction.year}</p>` : ''}
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
 
-            siteContent.predictions.forEach(prediction => {
+            siteContent.predictions.list.forEach(prediction => {
                 if (prediction.link) {
                     const predictionElement = predictionsGrid.querySelector(`[data-prediction-id="${prediction.id}"]`);
                     if (predictionElement) {
@@ -258,9 +289,6 @@
                 }
             });
         }
-
-        const currentPath = window.location.pathname;
-        const currentFile = currentPath.split('/').pop() || 'index.html';
 
         if (currentFile === 'index.html' || currentFile === '') {
             document.title = siteContent.author.name;

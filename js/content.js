@@ -90,19 +90,25 @@ const siteContent = {
             coverImage: "images/image4.png"
         },
     ],
-    predictions: [
-        {
-            id: "prediction1",
-            title: "2025",
-            year: "2025"
-        },
-        {
-            id: "prediction2",
-            title: "2026",
-            year: "2026",
-            link: "https://drive.google.com/file/d/1Cg5PpCk1iS7wQ_RLE0MCT490GvI5xcHn/view?usp=sharing"
-        }
-    ],
+    predictions: {
+        description: [
+            "Every December, I make predictions in 10 categories for the upcoming year."
+        ],
+        list: [
+            {
+                id: "prediction1",
+                title: "2025",
+                link: "Australia_2025.html",
+                coverImage: "images/2025.jpeg",
+            },
+            {
+                id: "prediction2",
+                title: "2026",
+                link: "Odyssey_2026.html",
+                coverImage: "images/2026.jpeg",
+            }
+        ]
+    },
     social: [
         {
             type: "email",
