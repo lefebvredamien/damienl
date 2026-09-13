@@ -11,8 +11,8 @@ const siteContent = {
         }
     },
     trilogy: {
-        description: ["'The Road We Pave' is a collection of short stories following ambitious characters throughout Europe.",
-            "Parts I through III flow chronologically; 'All that we felt' is a prequel spinoff.",
+        description: ["<em>The Road We Pave</em> is a collection of short stories following ambitious characters throughout Europe.",
+            "Parts I through III flow chronologically; <em>All that we felt</em> is a prequel spinoff.",
         ]
     },
     journey: [

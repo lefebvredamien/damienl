@@ -1,6 +1,6 @@
 (function () {
     function getPassword() {
-        return String.fromCharCode(77, 97, 114, 99, 111);
+        return String.fromCharCode(77, 111, 110, 97, 99, 111);
     }
 
     function promptPassword(message) {
