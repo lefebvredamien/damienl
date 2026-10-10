@@ -8,78 +8,68 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <style>
-
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 3rem;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-            text-align: center;
+        .page-intro {
+            max-width: 36rem;
+            margin: 0 0 3.5rem;
+            animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
-        .trilogy-blurb {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            padding: 2rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
+        .page-intro h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
         }
 
         .trilogy-blurb p {
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1.05rem;
+            line-height: 1.75;
             color: var(--text-secondary);
-            text-align: center;
+        }
+
+        .trilogy-blurb p + p {
+            margin-top: 0.75rem;
         }
 
         .books-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-            margin-bottom: 4rem;
-        }
-
-        .book-new-row {
-            grid-column: 1;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem 1.75rem;
+            margin-bottom: 2rem;
+            animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
         }
 
         .book {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-
-        .book:hover {
-            transform: translateY(-8px);
+            align-items: flex-start;
         }
 
         .book-cover-link {
             text-decoration: none;
             display: block;
             width: 100%;
-            max-width: 300px;
         }
 
         .book-cover {
             width: 100%;
             aspect-ratio: 2/3;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
+            background: linear-gradient(160deg, #2a2a26 0%, #3d3d36 100%);
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             position: relative;
-            cursor: pointer;
             display: block;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+        }
+
+        .book:hover .book-cover {
+            transform: translateY(-4px);
         }
 
         .book-cover.coming-soon-cover {
-            background: linear-gradient(135deg, var(--coming-soon-color-1) 0%, var(--coming-soon-color-2) 100%);
+            background: linear-gradient(160deg, var(--coming-soon-color-1) 0%, var(--coming-soon-color-2) 100%);
         }
 
         .book-cover img {
@@ -95,35 +85,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
         }
 
-        .book-cover::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            pointer-events: none;
-        }
-
         .book-info {
-            text-align: center;
+            text-align: left;
+            width: 100%;
         }
 
         .book-title {
-            font-size: 1.3rem;
+            font-family: var(--font-display);
+            font-size: 1.05rem;
             font-weight: 400;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.3px;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
             color: var(--text-primary);
+            line-height: 1.3;
         }
 
         .book-title-link {
@@ -133,34 +114,31 @@
         }
 
         .book-title-link:hover {
-            color: var(--text-primary);
+            color: var(--accent);
         }
 
         .book-year {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-quaternary);
             font-weight: 300;
-            letter-spacing: 1px;
+            letter-spacing: 0.04em;
         }
 
-        @media (max-width: 768px) {
-
-            .trilogy-blurb {
-                padding: 1.5rem;
-                margin-bottom: 3rem;
-            }
-
-            .trilogy-blurb p {
-                font-size: 1rem;
-            }
-
+        @media (max-width: 900px) {
             .books-grid {
-                grid-template-columns: 1fr;
-                gap: 4rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .books-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem 1rem;
             }
 
-            .book-cover {
-                max-width: 250px;
+            .book-title {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -168,9 +146,11 @@
 <body>
     <div id="header-placeholder"></div>
     <div class="container">
-
         <section>
-            <div class="trilogy-blurb" id="trilogy-blurb"></div>
+            <div class="page-intro">
+                <h1>Books</h1>
+                <div class="trilogy-blurb" id="trilogy-blurb"></div>
+            </div>
             <div class="books-grid" id="books-grid"></div>
         </section>
 

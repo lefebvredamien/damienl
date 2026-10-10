@@ -50,13 +50,40 @@
             });
         }
 
+        const authorNameElements = document.querySelectorAll('[data-content="author-name"]');
+        authorNameElements.forEach(el => {
+            if (siteContent.author.name) {
+                el.textContent = siteContent.author.name;
+            }
+        });
+
         const authorPhotoElements = document.querySelectorAll('[data-content="author-photo"]');
         authorPhotoElements.forEach(el => {
             if (siteContent.author.profileImage) {
                 el.src = siteContent.author.profileImage;
                 el.alt = siteContent.author.name;
+            } else {
+                el.style.display = 'none';
             }
         });
+
+        const citiesStage = document.getElementById('cities-stage');
+        if (citiesStage && siteContent.author.cities) {
+            const profileCenter = citiesStage.querySelector('.profile-center');
+            const panels = siteContent.author.cities.map(city => `
+                <div class="city-panel">
+                    <img src="${city.image}" alt="${city.name}" onerror="this.style.opacity='0'">
+                    <div class="city-meta">
+                        <span class="city-name">${city.name}</span>
+                        <span class="city-years">${city.years}</span>
+                    </div>
+                </div>
+            `).join('');
+            citiesStage.insertAdjacentHTML('afterbegin', panels);
+            if (profileCenter) {
+                citiesStage.appendChild(profileCenter);
+            }
+        }
 
         const authorDescElements = document.querySelectorAll('[data-content="author-description"]');
         if (authorDescElements.length > 0) {
@@ -74,32 +101,6 @@
                 el.href = siteContent.author.workLink.url;
             }
         });
-
-        const journeyList = document.getElementById('journey-list');
-
-        if (journeyList) {
-            const renderJourneyItem = (item) => {
-                const align = item.align || 'left';
-                return `
-                <li class="journey-item journey-item-${align}">
-                    ${item.logo ? `<div class="journey-image">
-                        <img src="${item.logo}" alt="${item.heading || ''}" onerror="this.style.display='none';">
-                    </div>` : '<div class="journey-image"></div>'}
-                    <div class="journey-content">
-                        <div class="journey-main">
-                            <span class="journey-heading">${item.heading || ''}</span>
-                        </div>
-                        <div class="journey-secondary">
-                            <span class="journey-timeframe">${item.timeframe || ''}</span>
-                            ${item.location ? ` <span class="journey-location">${item.location}</span>` : ''}
-                        </div>
-                    </div>
-                </li>
-            `;
-            };
-
-            journeyList.innerHTML = siteContent.journey.map(renderJourneyItem).join('');
-        }
 
         const trilogyBlurb = document.getElementById('trilogy-blurb');
         if (trilogyBlurb && siteContent.trilogy) {
@@ -135,22 +136,13 @@
             });
 
             booksGrid.innerHTML = orderedBooks.map(book => {
-                const gradients = {
-                    'book1': '#667eea 0%, #764ba2 100%',
-                    'book2': '#f093fb 0%, #f5576c 100%',
-                    'book4': '#a8edea 0%, #fed6e3 100%'
-                };
-                const gradient = gradients[book.id] || '#667eea 0%, #764ba2 100%';
                 const hasCover = book.coverImage !== null && book.coverImage !== undefined;
-
-                const isNewRow = book.id === 'book4';
                 const isComingSoon = book.id === 'book3';
                 const coverClass = isComingSoon ? 'book-cover coming-soon-cover' : 'book-cover';
-                const coverStyle = isComingSoon ? '' : `style="background: linear-gradient(135deg, ${gradient});"`;
                 return `
-                <div class="book ${isNewRow ? 'book-new-row' : ''}">
+                <div class="book">
                     <a href="${book.id}.html" class="book-cover-link">
-                        <div class="${coverClass}" ${coverStyle}>
+                        <div class="${coverClass}">
                             ${hasCover ? `<img src="${book.coverImage}" alt="${book.title}" onerror="this.style.display='none';">` : '<div class="coming-soon">Coming Soon</div>'}
                         </div>
                     </a>
@@ -214,29 +206,12 @@
             if (bookId) {
                 const book = siteContent.books.find(b => b.id === bookId);
                 if (book) {
-                    const getComingSoonGradient = () => {
-                        const computedStyle = getComputedStyle(document.documentElement);
-                        const gradient = computedStyle.getPropertyValue('--coming-soon-gradient').trim() || '#c4b5fd 0%, #e9d5ff 100%';
-                        return `linear-gradient(135deg, ${gradient})`;
-                    };
-
-                    const gradients = {
-                        'book1': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        'book2': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                        'book3': getComingSoonGradient(),
-                        'book4': 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
-                    };
-                    const gradient = gradients[bookId] || gradients['book1'];
-
                     if (book.coverImage) {
                         el.style.display = 'block';
                         el.src = book.coverImage;
                         el.alt = book.title;
                         el.onerror = function () {
                             this.style.display = 'none';
-                            if (this.parentElement) {
-                                this.parentElement.style.background = gradient;
-                            }
                         };
                     } else {
                         el.style.display = 'none';
@@ -244,8 +219,6 @@
                         if (parent) {
                             if (bookId === 'book3') {
                                 parent.classList.add('coming-soon-cover');
-                            } else {
-                                parent.style.background = gradient;
                             }
                             if (!parent.querySelector('.coming-soon')) {
                                 const comingSoon = document.createElement('div');

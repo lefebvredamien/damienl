@@ -1,25 +1,26 @@
 footer {
-    text-align: center;
-    margin-top: 4rem;
-    padding-top: 3rem;
-    padding-bottom: 2rem;
+    text-align: left;
+    margin-top: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
     border-top: 1px solid var(--border-color);
     color: var(--text-quaternary);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
 }
 
 .footer-controls {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 3rem;
-    margin-bottom: 1.5rem;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
     flex-wrap: wrap;
 }
 
 .footer-social {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
 }
 
@@ -37,22 +38,20 @@ footer {
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    background: var(--bg-primary);
+    transform: translateX(-50%) translateY(-4px);
+    margin-bottom: 0.4rem;
+    padding: 0.4rem 0.65rem;
+    background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 4px;
     color: var(--text-primary);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    transform: translateX(-50%) translateY(-5px);
+    transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
     z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .footer-social span.contact-link:hover::after {
@@ -61,86 +60,64 @@ footer {
     transform: translateX(-50%) translateY(0);
 }
 
-.footer-social span.contact-link::before {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 0.25rem;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 6px 6px 0 6px;
-    border-color: var(--border-color) transparent transparent transparent;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 1001;
-}
-
-.footer-social span.contact-link:hover::before {
-    opacity: 1;
-    visibility: visible;
-}
-
 .theme-toggle {
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 0.35rem;
 }
 
 .theme-option {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.7);
-    padding: 0.5rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-tertiary);
+    padding: 0;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
     font-family: inherit;
-    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 .theme-option svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
 }
 
 .theme-option:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.4);
-    color: rgba(255, 255, 255, 1);
-    transform: translateY(-1px);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
 }
 
 .theme-option.active {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: rgba(255, 255, 255, 1);
-    font-weight: 500;
-}
-
-.theme-light .theme-option {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.2);
-    color: rgba(0, 0, 0, 0.7);
-}
-
-.theme-light .theme-option:hover {
-    background: rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.4);
-    color: rgba(0, 0, 0, 1);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    background: rgba(154, 171, 142, 0.12);
 }
 
 .theme-light .theme-option.active {
-    background: rgba(0, 0, 0, 0.15);
-    border-color: rgba(0, 0, 0, 0.5);
-    color: rgba(0, 0, 0, 1);
+    background: rgba(74, 92, 63, 0.1);
+}
+
+@media (max-width: 768px) {
+    .footer-controls {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 1rem;
+    }
+
+    .footer-social {
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .theme-toggle {
+        flex-shrink: 0;
+    }
 }

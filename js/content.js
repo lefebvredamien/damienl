@@ -3,59 +3,36 @@ const siteContent = {
         name: "Damien Lefebvre",
         profileImage: "images/profile_2.JPG",
         description: [
-            "Hi I'm Damien Lefebvre and I'm a quantitative trader. Welcome to my personal website where I share my creative work."
+            "Stories and yearly predictions."
         ],
         workLink: {
-            text: "Read some of my work",
+            text: "Books",
             url: "books.html"
-        }
+        },
+        cities: [
+            {
+                name: "Los Angeles",
+                years: "2015 — 2019",
+                image: "images/city-los-angeles.jpg"
+            },
+            {
+                name: "New York",
+                years: "2019 — 2021",
+                image: "images/city-new-york.jpg"
+            },
+            {
+                name: "Chicago",
+                years: "2021 — 2026",
+                image: "images/city-chicago.jpg"
+            }
+        ]
     },
     trilogy: {
         description: ["<em>The Road We Pave</em> is a collection of short stories following ambitious characters throughout Europe.",
             "Parts I through III flow chronologically; <em>All that we felt</em> is a prequel spinoff.",
         ]
     },
-    journey: [
-        {
-            heading: "Wrote my first novel: Spark Republic",
-            timeframe: "August 2012",
-            logo: null,
-            align: "left"
-        },
-        {
-            heading: "UCLA - B.S. in Mathematics of Computation",
-            timeframe: "2015-2019",
-            location: "Los Angeles",
-            logo: "images/ucla_logo.png",
-            align: "right"
-        },
-        {
-            heading: "Gifted my dad a story based on his books: Black Curtain",
-            timeframe: "April 2019",
-            logo: null,
-            align: "left"
-        },
-        {
-            heading: "WorldQuant - Execution Trader",
-            timeframe: "2019-2021",
-            location: "New York",
-            logo: "images/worldquant_logo.jpg",
-            align: "right"
-        },
-        {
-            heading: "DRW - Trader",
-            timeframe: "2021-Present",
-            location: "Chicago",
-            logo: "images/drw_logo.jpg",
-            align: "right"
-        },
-        {
-            heading: "Wrote Part I of my trilogy: The Road We Pave",
-            timeframe: "September 2024",
-            logo: null,
-            align: "left"
-        },
-    ],
+    journey: [],
     books: [
         {
             id: "book1",

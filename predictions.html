@@ -8,66 +8,56 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <style>
-        .section-title {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 3rem;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-            text-align: center;
+        .page-intro {
+            max-width: 36rem;
+            margin: 0 0 3.5rem;
+            animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
-        .predictions-blurb {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            padding: 2rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
+        .page-intro h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
         }
 
         .predictions-blurb p {
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1.05rem;
+            line-height: 1.75;
             color: var(--text-secondary);
-            text-align: center;
         }
 
         .predictions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-            margin-bottom: 4rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            grid-template-columns: repeat(2, minmax(0, 280px));
+            gap: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
         }
 
         .prediction {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-
-        .prediction:hover {
-            transform: translateY(-8px);
+            align-items: flex-start;
         }
 
         .prediction-cover {
             width: 100%;
-            max-width: 300px;
             aspect-ratio: 2/3;
-            background: linear-gradient(135deg, var(--coming-soon-color-1) 0%, var(--coming-soon-color-2) 100%);
-            border-radius: 8px;
+            background: linear-gradient(160deg, var(--coming-soon-color-1) 0%, var(--coming-soon-color-2) 100%);
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .prediction:hover .prediction-cover {
+            transform: translateY(-4px);
         }
 
         .prediction-cover img {
@@ -77,67 +67,43 @@
             display: block;
         }
 
-        .prediction-cover::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            pointer-events: none;
-        }
-
         .coming-soon {
             width: 100%;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 2px;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
         }
 
         .prediction-info {
-            text-align: center;
+            text-align: left;
         }
 
         .prediction-title {
-            font-size: 1.3rem;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
             font-weight: 400;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.3px;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
             color: var(--text-primary);
         }
 
         .prediction-year {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-quaternary);
             font-weight: 300;
-            letter-spacing: 1px;
+            letter-spacing: 0.04em;
         }
 
-        @media (max-width: 768px) {
-            .predictions-blurb {
-                padding: 1.5rem;
-                margin-bottom: 3rem;
-            }
-
-            .predictions-blurb p {
-                font-size: 1rem;
-            }
-
+        @media (max-width: 600px) {
             .predictions-grid {
-                grid-template-columns: 1fr;
-                gap: 4rem;
-            }
-
-            .prediction-cover {
-                max-width: 250px;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem 1rem;
             }
         }
     </style>
@@ -145,9 +111,11 @@
 <body>
     <div id="header-placeholder"></div>
     <div class="container">
-
         <section>
-            <div class="predictions-blurb" id="predictions-blurb"></div>
+            <div class="page-intro">
+                <h1>Predictions</h1>
+                <div class="predictions-blurb" id="predictions-blurb"></div>
+            </div>
             <div class="predictions-grid" id="predictions-grid"></div>
         </section>
 

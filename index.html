@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <style>
-
         body {
             overflow-x: hidden;
             margin: 0;
@@ -17,423 +16,170 @@
 
         .container {
             width: 100%;
-            overflow-x: hidden;
+            max-width: none;
             padding: 0;
             margin: 0;
+            overflow-x: hidden;
         }
 
-        #home,
-        #timeline {
-            position: relative;
+        #header-placeholder {
+            height: 0;
         }
 
         #home {
-            min-height: 100vh;
             height: 100vh;
+            height: 100dvh;
             width: 100%;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
+            flex-direction: column;
+            padding: 0;
             box-sizing: border-box;
-            margin-bottom: 0;
+            margin: 0;
         }
 
-        .home-content {
-            display: grid;
-            grid-template-columns: minmax(250px, 400px) 1fr;
-            gap: 4rem;
-            align-items: center;
-            max-width: 1000px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .author-photo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .author-photo {
-            width: 100%;
-            max-width: 400px;
-            max-height: calc(100vh - 8rem);
-            aspect-ratio: 2/3;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        .cities-stage {
             position: relative;
-            object-fit: contain;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
-        @media (max-height: 800px) {
-            .author-photo {
-                max-height: calc(100vh - 10rem);
-            }
+        .city-panel {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-secondary);
+            min-height: 0;
+            cursor: default;
         }
 
-        @media (max-height: 600px) {
-            .author-photo {
-                max-height: calc(100vh - 12rem);
-            }
+        .city-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transform: scale(1);
+            transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+            filter: brightness(0.72);
         }
 
-        .scroll-arrow-container {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 50;
-            cursor: pointer;
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-            opacity: 0.7;
+        .city-panel:hover img {
+            transform: scale(1.12);
+            filter: brightness(0.55);
         }
 
-        .scroll-arrow-container.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .scroll-arrow-container:hover {
-            opacity: 1;
-            transform: translateX(-50%) translateY(-5px);
-        }
-
-        .scroll-arrow svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--text-secondary);
-            transition: stroke 0.3s ease;
-        }
-
-        .scroll-arrow-container:hover svg {
-            stroke: var(--text-primary);
-        }
-
-        .home-right-column {
+        .city-meta {
+            position: absolute;
+            inset: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            align-items: center;
+            justify-content: flex-end;
+            text-align: center;
+            padding: 1.25rem;
+            opacity: 1;
+            pointer-events: none;
+            z-index: 2;
+            background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.55));
         }
 
-        .home-text {
-            font-size: 1.4rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            margin-bottom: 0;
+        .city-name {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: #f2f1ec;
+            margin-bottom: 0.4rem;
         }
 
-        .author-photo img {
+        .city-years {
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(242, 241, 236, 0.75);
+        }
+
+        .profile-center {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 25%;
+            margin: 0 auto;
+            translate: 0 -50%;
+            z-index: 5;
+            width: clamp(120px, 15vw, 180px);
+            height: clamp(120px, 15vw, 180px);
+            pointer-events: none;
+            animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+        }
+
+        .profile-orb {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--bg-primary);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            background: var(--bg-secondary);
+        }
+
+        .profile-orb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        .author-photo::after {
-            content: '';
+        .home-brand {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            pointer-events: none;
-        }
-
-        #timeline {
-            min-height: 100vh;
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            box-sizing: border-box;
-            margin-bottom: 0;
-            margin-top: 0;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-
-        #timeline.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .timeline-section {
-            max-width: 1000px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .journey-subtitle {
-            font-size: 1.2rem;
-            font-weight: 400;
-            color: var(--text-primary);
-            margin-bottom: 2rem;
-            margin-top: 0;
-            text-align: center;
-        }
-
-        .journey-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            padding: 0 2rem;
-        }
-
-        .timeline-line {
-            position: absolute;
+            top: calc(100% + 1rem);
             left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--border-color);
             transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        .journey-list {
-            list-style: none;
+            width: max-content;
+            font-family: var(--font-display);
+            font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+            font-weight: 400;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: #f2f1ec;
             margin: 0;
-            padding: 0;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            position: relative;
-            z-index: 2;
+            text-align: center;
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
         }
 
-        .journey-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 400px;
-            max-width: calc(50% - 3rem);
-            position: relative;
-        }
-
-
-        .journey-item-left {
-            flex-direction: row;
-            margin-left: 0;
-            margin-right: auto;
-        }
-
-        .journey-item-right {
-            flex-direction: row-reverse;
-            margin-left: auto;
-            margin-right: 0;
-        }
-
-        .journey-item:hover {
-            transform: translateY(-2px);
-            border-color: var(--border-hover);
-            background: var(--card-hover);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .journey-item-left:hover {
-            transform: translateX(6px) translateY(-2px);
-        }
-
-        .journey-item-right:hover {
-            transform: translateX(-6px) translateY(-2px);
-        }
-
-        .journey-image {
-            width: 40px;
-            height: 40px;
-            min-width: 40px;
-            border-radius: 6px;
-            overflow: hidden;
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .journey-image:empty {
+        .home-footer-wrap {
             display: none;
         }
 
-        .journey-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        .journey-content {
-            flex: 1;
-        }
-
-        .journey-item-left .journey-content {
-            text-align: left;
-        }
-
-        .journey-item-right .journey-content {
-            text-align: right;
-        }
-
-        .journey-main {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: var(--text-primary);
-            margin-bottom: 0.4rem;
-            transition: color 0.3s ease;
-        }
-
-        .journey-item:hover .journey-main {
-            color: var(--text-primary);
-        }
-
-        .journey-heading {
-            font-weight: 500;
-        }
-
-        .journey-secondary {
-            font-size: 0.8rem;
-            line-height: 1.4;
-            color: var(--text-tertiary);
-            transition: color 0.3s ease;
-        }
-
-        .journey-item:hover .journey-secondary {
-            color: var(--text-secondary);
-        }
-
-        .journey-timeframe {
-            font-weight: 400;
-            margin-right: 1rem;
-        }
-
-        .journey-location {
-            font-weight: 300;
-        }
-
-        .home-bottom-link {
-            text-align: center;
-            margin-top: 2rem;
-            margin-bottom: 0;
-        }
-
-        .home-bottom-link a {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            text-decoration: underline;
-            text-underline-offset: 0.3em;
-            transition: color 0.3s ease;
-            font-weight: 300;
-        }
-
-        .home-bottom-link a:hover {
-            color: var(--text-primary);
-        }
-
         @media (max-width: 768px) {
-            #home,
-            #timeline {
-                padding: 1.5rem;
+            .profile-center {
+                width: 100px;
+                height: 100px;
             }
 
-            footer {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-                box-sizing: border-box;
+            .home-brand {
+                font-size: 1.25rem;
             }
 
-            .footer-controls {
-                flex-direction: column;
-                gap: 1.5rem;
+            .city-name {
+                font-size: clamp(0.95rem, 3.5vw, 1.25rem);
             }
 
-            .footer-social {
-                justify-content: center;
+            .city-years {
+                font-size: 0.65rem;
+                letter-spacing: 0.08em;
             }
 
-            .home-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
+            .city-meta {
+                padding: 0.75rem 0.5rem;
             }
 
-            .author-photo {
-                max-width: 300px;
-                max-height: calc(100vh - 10rem);
-                margin: 0 auto;
-            }
-
-            .home-text {
-                text-align: center;
-            }
-
-            .scroll-arrow-container {
-                bottom: 1.5rem;
-            }
-
-            .timeline-section {
-                padding: 0;
-            }
-
-            .journey-container {
-                padding: 0 1rem;
-            }
-
-            .timeline-line {
-                display: none;
-            }
-
-            .journey-item {
-                flex-direction: column !important;
-                align-items: center;
-                text-align: center;
-                max-width: 100%;
-                margin-left: auto !important;
-                margin-right: auto !important;
-            }
-
-
-            .journey-content {
-                text-align: center !important;
-            }
-
-            .journey-image {
-                margin-bottom: 1rem;
-            }
-        }
-
-        @media (max-height: 700px) and (min-width: 769px) {
-            .author-photo {
-                max-height: calc(100vh - 12rem);
-            }
-
-            .home-content {
-                gap: 2rem;
-            }
-        }
-
-        @media (max-height: 500px) {
-            .author-photo {
-                max-height: calc(100vh - 14rem);
-            }
-
-            #home {
-                padding: 1rem;
+            .city-panel:hover img {
+                transform: scale(1.08);
             }
         }
     </style>
@@ -441,48 +187,23 @@
 <body>
     <div id="header-placeholder"></div>
     <div class="container">
-
         <section id="home">
-            <div class="home-content">
-                <div class="author-photo-container">
-                    <div class="author-photo">
-                        <img data-content="author-photo" alt="" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)';">
+            <div class="cities-stage" id="cities-stage">
+                <div class="profile-center">
+                    <div class="profile-orb">
+                        <img data-content="author-photo" alt="">
                     </div>
-                </div>
-                <div class="home-right-column">
-                    <div class="home-text">
-                        <p data-content="author-description"></p>
-                        <p data-content="author-description" style="margin-top: 1.5rem;"></p>
-                    </div>
+                    <h1 class="home-brand" data-content="author-name">Damien Lefebvre</h1>
                 </div>
             </div>
         </section>
 
-        <div class="scroll-arrow-container" id="scroll-arrow">
-            <div class="scroll-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </div>
+        <div class="home-footer-wrap">
+            <footer>
+                <div id="footer-social-placeholder"></div>
+                <p>&copy; <span id="copyright-year"></span></p>
+            </footer>
         </div>
-
-        <section id="timeline">
-            <div class="timeline-section">
-                <h2 class="journey-subtitle">My journey</h2>
-                <div class="journey-container">
-                    <div class="timeline-line"></div>
-                    <ul class="journey-list" id="journey-list"></ul>
-                </div>
-                <div class="home-bottom-link">
-                    <a href="" data-content="work-link"></a>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <div id="footer-social-placeholder"></div>
-            <p>&copy; <span id="copyright-year"></span></p>
-        </footer>
     </div>
     <script src="js/theme.js"></script>
     <script src="js/background-interactive.js"></script>
@@ -493,58 +214,6 @@
     <script src="js/load-footer.js"></script>
     <script>
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
-
-        (function() {
-            const scrollArrow = document.getElementById('scroll-arrow');
-            const homeSection = document.getElementById('home');
-            const timelineSection = document.getElementById('timeline');
-
-            function showTimeline() {
-                if (timelineSection) {
-                    timelineSection.classList.add('visible');
-                }
-            }
-
-            function updateArrowVisibility() {
-                if (!scrollArrow || !timelineSection) return;
-
-                const timelineTop = timelineSection.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (timelineTop <= windowHeight * 0.3) {
-                    scrollArrow.classList.add('hidden');
-                } else {
-                    scrollArrow.classList.remove('hidden');
-                }
-            }
-
-            function checkScrollVisibility() {
-                if (!timelineSection) return;
-                
-                const timelineTop = timelineSection.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (timelineTop < windowHeight * 0.5 && timelineTop > -windowHeight * 0.5) {
-                    showTimeline();
-                }
-            }
-
-            scrollArrow.addEventListener('click', function() {
-                showTimeline();
-                timelineSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-
-            window.addEventListener('scroll', function() {
-                updateArrowVisibility();
-                checkScrollVisibility();
-            });
-            window.addEventListener('resize', function() {
-                updateArrowVisibility();
-                checkScrollVisibility();
-            });
-            updateArrowVisibility();
-            checkScrollVisibility();
-        })();
     </script>
 </body>
 </html>
