@@ -62,8 +62,8 @@ const siteContent = {
             id: "book3",
             title: "Timefall",
             year: "Summer 2026",
-            summary: "",
-            pdfLink: "https://drive.google.com/file/d/1Qm5hdo8R8tRQddFVoO5MPyMFsnyTFI56/view?usp=sharing",
+            summary: "A fast-paced puzzle exploring intelligence and humanity, set between the futuristic headquarters of a secretive company and the luxury island of a billionaire.",
+            pdfLink: "https://drive.google.com/file/d/1-3jhJ3AreUc80ZZHrwbRFj7jXgrHo75F/view?usp=sharing",
             coverImage: "images/image5.png"
         },
     ],
