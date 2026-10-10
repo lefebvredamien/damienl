@@ -131,14 +131,13 @@
         const booksGrid = document.getElementById('books-grid');
         if (booksGrid) {
             const orderedBooks = [...siteContent.books].sort((a, b) => {
-                const order = { 'book1': 1, 'book2': 2, 'book3': 3, 'book4': 4 };
+                const order = { 'book1': 1, 'book2': 2, 'book4': 3, 'book3': 4 };
                 return (order[a.id] || 99) - (order[b.id] || 99);
             });
 
             booksGrid.innerHTML = orderedBooks.map(book => {
                 const hasCover = book.coverImage !== null && book.coverImage !== undefined;
-                const isComingSoon = book.id === 'book3';
-                const coverClass = isComingSoon ? 'book-cover coming-soon-cover' : 'book-cover';
+                const coverClass = hasCover ? 'book-cover' : 'book-cover coming-soon-cover';
                 return `
                 <div class="book">
                     <a href="${book.id}.html" class="book-cover-link">
@@ -217,9 +216,7 @@
                         el.style.display = 'none';
                         const parent = el.parentElement;
                         if (parent) {
-                            if (bookId === 'book3') {
-                                parent.classList.add('coming-soon-cover');
-                            }
+                            parent.classList.add('coming-soon-cover');
                             if (!parent.querySelector('.coming-soon')) {
                                 const comingSoon = document.createElement('div');
                                 comingSoon.className = 'coming-soon';

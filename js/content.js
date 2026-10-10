@@ -29,7 +29,7 @@ const siteContent = {
     },
     trilogy: {
         description: ["<em>The Road We Pave</em> is a collection of short stories following ambitious characters throughout Europe.",
-            "Parts I through III flow chronologically; <em>All that we felt</em> is a prequel spinoff.",
+            "Parts I and II flow chronologically; <em>All that we felt</em> is a prequel spinoff.",
         ]
     },
     journey: [],
@@ -51,20 +51,20 @@ const siteContent = {
             coverImage: "images/image2.png"
         },
         {
-            id: "book3",
-            title: "Part III: Ljusen",
-            year: "Coming Soon",
-            summary: "",
-            pdfLink: "#",
-            coverImage: null
-        },
-        {
             id: "book4",
             title: "All that we felt",
             year: "Winter 2025",
             summary: "In the echoing halls of the Conservatoire de Paris, rivalry and desire intertwine in an ambitious wager. Each challenge will push two prodigies to the edge of triumph and heartbreak. In the quiet reckoning, winning the stage may mean losing something far more fragile.",
             pdfLink: "https://drive.google.com/file/d/1nThwrZa401PYfqRcuhhOGzIQqq6uQF6t/view?usp=sharing",
             coverImage: "images/image4.png"
+        },
+        {
+            id: "book3",
+            title: "Timefall",
+            year: "Summer 2026",
+            summary: "",
+            pdfLink: "https://drive.google.com/file/d/1Qm5hdo8R8tRQddFVoO5MPyMFsnyTFI56/view?usp=sharing",
+            coverImage: "images/image5.png"
         },
     ],
     predictions: {
