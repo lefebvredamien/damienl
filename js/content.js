@@ -29,7 +29,7 @@ const siteContent = {
     },
     trilogy: {
         description: ["<em>The Road We Pave</em> is a collection of short stories following ambitious characters throughout Europe.",
-            "Parts I and II flow chronologically; <em>All that we felt</em> is a prequel spinoff.",
+            "Parts I and II flow chronologically; <em>All that we felt</em> is a prequel spinoff. <em>Timefall</em> is a standalone short story.",
         ]
     },
     journey: [],
