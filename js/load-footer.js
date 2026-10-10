@@ -76,8 +76,22 @@
             const footerSocial = document.createElement('div');
             footerSocial.className = 'footer-social';
             footerSocial.innerHTML = socialLinks;
-            
-            footerControls.appendChild(themeToggle);
+
+            const themeGroup = document.createElement('div');
+            themeGroup.className = 'footer-theme-group';
+            themeGroup.appendChild(themeToggle);
+
+            const copyright = footer.querySelector('p');
+            if (copyright) {
+                copyright.className = 'footer-copyright';
+                const yearSpan = copyright.querySelector('#copyright-year');
+                if (yearSpan) {
+                    yearSpan.textContent = new Date().getFullYear();
+                }
+                themeGroup.appendChild(copyright);
+            }
+
+            footerControls.appendChild(themeGroup);
             footerControls.appendChild(footerSocial);
             
             footer.insertBefore(footerControls, footerSocialPlaceholder);

@@ -4,8 +4,8 @@
 }
 
 :root {
-    --header-bg: rgba(17, 17, 16, 0.7);
-    --header-border: rgba(242, 241, 236, 0.08);
+    --header-bg: rgba(36, 36, 32, 0.94);
+    --header-border: rgba(242, 241, 236, 0.14);
     --nav-link-color: rgba(242, 241, 236, 0.5);
     --nav-link-hover: rgba(242, 241, 236, 1);
     --contact-link-bg: transparent;
@@ -15,8 +15,8 @@
 }
 
 .theme-light {
-    --header-bg: rgba(243, 243, 241, 0.75);
-    --header-border: rgba(22, 22, 20, 0.08);
+    --header-bg: rgba(220, 220, 214, 0.94);
+    --header-border: rgba(22, 22, 20, 0.14);
     --nav-link-color: rgba(22, 22, 20, 0.45);
     --nav-link-hover: rgba(22, 22, 20, 1);
     --contact-link-border: rgba(22, 22, 20, 0.15);

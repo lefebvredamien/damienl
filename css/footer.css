@@ -14,8 +14,22 @@ footer {
     justify-content: space-between;
     align-items: center;
     gap: 1.5rem;
-    margin-bottom: 1.25rem;
     flex-wrap: wrap;
+}
+
+.footer-theme-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-copyright {
+    margin: 0;
+    color: var(--text-quaternary);
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
 }
 
 .footer-social {

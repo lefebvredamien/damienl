@@ -36,7 +36,7 @@ const siteContent = {
     books: [
         {
             id: "book1",
-            title: "Part I: Lagranges",
+            title: "Part I: Lagrange",
             year: "Fall 2024",
             summary: "In the heart of the wealthiest enclave of the French riviera, worlds collide in a fight for power and fame. Parse the non-linear narrative to uncover a tale of ambition, excellence, and betrayal. In the end, the secrets that forged a family dynasty might become its undoing.",
             pdfLink: "https://drive.google.com/file/d/13K6ykUXSPs_n85jSraLu6Hg6-zDNs3Gq/view?usp=sharing",

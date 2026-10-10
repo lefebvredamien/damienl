@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Damien Lefebvre</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <style>
         body {
@@ -20,10 +19,6 @@
             padding: 0;
             margin: 0;
             overflow-x: hidden;
-        }
-
-        #header-placeholder {
-            height: 0;
         }
 
         #home {
@@ -56,19 +51,33 @@
             cursor: default;
         }
 
+        .city-panel::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent 28%,
+                rgba(0, 0, 0, 0.35) 62%,
+                rgba(0, 0, 0, 0.72) 100%
+            );
+        }
+
         .city-panel img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
             transform: scale(1);
-            transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
-            filter: brightness(0.72);
+            transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+            filter: brightness(0.95);
         }
 
         .city-panel:hover img {
             transform: scale(1.12);
-            filter: brightness(0.55);
         }
 
         .city-meta {
@@ -83,7 +92,6 @@
             opacity: 1;
             pointer-events: none;
             z-index: 2;
-            background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.55));
         }
 
         .city-name {
@@ -118,13 +126,31 @@
         }
 
         .profile-orb {
+            position: relative;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--bg-primary);
+            overflow: visible;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
             background: var(--bg-secondary);
+            pointer-events: auto;
+            cursor: default;
+        }
+
+        .profile-orb::before {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 3px solid var(--bg-primary);
+            border-top-color: transparent;
+            z-index: 2;
+            pointer-events: none;
+            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .profile-orb:hover::before {
+            transform: rotate(360deg);
         }
 
         .profile-orb img {
@@ -132,14 +158,23 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            border-radius: 50%;
         }
 
-        .home-brand {
+        .home-identity {
             position: absolute;
             top: calc(100% + 1rem);
             left: 50%;
             transform: translateX(-50%);
             width: max-content;
+            text-align: center;
+            pointer-events: auto;
+            padding: 0.85rem 1.35rem 1rem;
+            background: rgba(0, 0, 0, 0.62);
+            border-radius: 10px;
+        }
+
+        .home-brand {
             font-family: var(--font-display);
             font-size: clamp(1.35rem, 2.5vw, 1.85rem);
             font-weight: 400;
@@ -149,6 +184,29 @@
             margin: 0;
             text-align: center;
             text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+        }
+
+        .home-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.85rem;
+        }
+
+        .home-links a {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: rgba(242, 241, 236, 0.7);
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+            transition: color 0.3s ease;
+        }
+
+        .home-links a:hover {
+            color: #f2f1ec;
         }
 
         .home-footer-wrap {
@@ -163,6 +221,15 @@
 
             .home-brand {
                 font-size: 1.25rem;
+            }
+
+            .home-links {
+                gap: 1.15rem;
+                margin-top: 0.7rem;
+            }
+
+            .home-links a {
+                font-size: 0.7rem;
             }
 
             .city-name {
@@ -185,7 +252,6 @@
     </style>
 </head>
 <body>
-    <div id="header-placeholder"></div>
     <div class="container">
         <section id="home">
             <div class="cities-stage" id="cities-stage">
@@ -193,7 +259,13 @@
                     <div class="profile-orb">
                         <img data-content="author-photo" alt="">
                     </div>
-                    <h1 class="home-brand" data-content="author-name">Damien Lefebvre</h1>
+                    <div class="home-identity">
+                        <h1 class="home-brand" data-content="author-name">Damien Lefebvre</h1>
+                        <nav class="home-links">
+                            <a href="books.html">Books</a>
+                            <a href="predictions.html">Predictions</a>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </section>
@@ -207,13 +279,8 @@
     </div>
     <script src="js/theme.js"></script>
     <script src="js/background-interactive.js"></script>
-    <script src="js/header-content.js"></script>
-    <script src="js/load-header.js"></script>
     <script src="js/content.js"></script>
     <script src="js/load-content.js"></script>
     <script src="js/load-footer.js"></script>
-    <script>
-        document.getElementById('copyright-year').textContent = new Date().getFullYear();
-    </script>
 </body>
 </html>
