@@ -140,17 +140,40 @@
         .profile-orb::before {
             content: "";
             position: absolute;
-            inset: -3px;
+            inset: -5px;
             border-radius: 50%;
-            border: 3px solid var(--bg-primary);
-            border-top-color: transparent;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 300deg,
+                rgba(0, 0, 0, 0.4) 325deg,
+                #000 345deg,
+                transparent 360deg
+            );
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+            opacity: 0;
             z-index: 2;
             pointer-events: none;
-            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .profile-orb:hover::before {
-            transform: rotate(360deg);
+            animation: orbit-arc-once 0.7s ease-out forwards;
+        }
+
+        @keyframes orbit-arc-once {
+            0% {
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            92% {
+                opacity: 1;
+                transform: rotate(360deg);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(360deg);
+            }
         }
 
         .profile-orb img {
