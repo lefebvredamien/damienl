@@ -30,6 +30,7 @@ const siteContent = {
     trilogy: {
         description: ["<em>The Road We Pave</em> is a collection of short stories following ambitious characters throughout Europe.",
             "Parts I and II flow chronologically; <em>All that we felt</em> is a prequel spinoff. <em>Timefall</em> is a standalone short story.",
+            "Find my Predictions <a href=\"predictions.html\">here</a>.",
         ]
     },
     journey: [],
@@ -93,19 +94,14 @@ const siteContent = {
             title: "Email"
         },
         {
-            type: "phone",
-            url: "+1 (310) 923-2134",
-            title: "Phone"
-        },
-        {
             type: "linkedin",
             url: "https://www.linkedin.com/in/lefebvredamien/",
             title: "LinkedIn"
         },
         {
-            type: "github",
-            url: "https://github.com/lefebvredamien",
-            title: "GitHub"
+            type: "instagram",
+            url: "https://www.instagram.com/damienlcom/",
+            title: "Instagram"
         }
     ]
 };

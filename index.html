@@ -235,11 +235,13 @@
         .home-links {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 1.5rem;
             margin-top: 0.85rem;
         }
 
-        .home-links a {
+        .home-links a,
+        .home-links button {
             font-family: var(--font-body);
             font-size: 0.8rem;
             font-weight: 400;
@@ -249,10 +251,95 @@
             color: rgba(242, 241, 236, 0.7);
             text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
             transition: color 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
         }
 
-        .home-links a:hover {
+        .home-links a:hover,
+        .home-links button:hover,
+        .home-links button[aria-expanded="true"] {
             color: #f2f1ec;
+        }
+
+        .home-social {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 0.85rem;
+            padding-top: 0.9rem;
+        }
+
+        .home-social.is-open {
+            display: flex;
+            animation: home-social-in 0.35s var(--ease) both;
+        }
+
+        @keyframes home-social-in {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .home-social .contact-link {
+            position: relative;
+            color: rgba(242, 241, 236, 0.7);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.15rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .home-social .contact-link:hover {
+            color: #f2f1ec;
+        }
+
+        .home-social .contact-link svg {
+            display: block;
+            width: 16px;
+            height: 16px;
+        }
+
+        .home-social span.contact-link {
+            cursor: pointer;
+        }
+
+        .home-social span.contact-link::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-4px);
+            margin-bottom: 0.4rem;
+            padding: 0.4rem 0.65rem;
+            background: rgba(0, 0, 0, 0.88);
+            border: 1px solid rgba(242, 241, 236, 0.16);
+            border-radius: 4px;
+            color: #f2f1ec;
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 0;
+            text-transform: none;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+            z-index: 5;
+        }
+
+        .home-social span.contact-link:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
 
         .home-footer-wrap {
@@ -274,7 +361,8 @@
                 margin-top: 0.7rem;
             }
 
-            .home-links a {
+            .home-links a,
+            .home-links button {
                 font-size: 0.7rem;
             }
 
@@ -309,8 +397,9 @@
                         <h1 class="home-brand" data-content="author-name">Damien Lefebvre</h1>
                         <nav class="home-links">
                             <a href="books.html">Books</a>
-                            <a href="predictions.html">Predictions</a>
+                            <button type="button" id="home-social-toggle" aria-expanded="false" aria-controls="home-social">Social</button>
                         </nav>
+                        <div class="home-social" id="home-social"></div>
                     </div>
                 </div>
             </div>
@@ -328,5 +417,44 @@
     <script src="js/content.js"></script>
     <script src="js/load-content.js"></script>
     <script src="js/load-footer.js"></script>
+    <script>
+        (function() {
+            const toggle = document.getElementById('home-social-toggle');
+            const panel = document.getElementById('home-social');
+            if (!toggle || !panel) return;
+
+            const hoverFine = window.matchMedia('(hover: hover) and (pointer: fine)');
+            let closeTimer;
+
+            function setOpen(open) {
+                clearTimeout(closeTimer);
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                panel.classList.toggle('is-open', open);
+            }
+
+            function scheduleClose() {
+                clearTimeout(closeTimer);
+                closeTimer = setTimeout(function() {
+                    toggle.setAttribute('aria-expanded', 'false');
+                    panel.classList.remove('is-open');
+                }, 180);
+            }
+
+            if (hoverFine.matches) {
+                toggle.addEventListener('mouseenter', function() { setOpen(true); });
+                panel.addEventListener('mouseenter', function() { setOpen(true); });
+                toggle.addEventListener('mouseleave', scheduleClose);
+                panel.addEventListener('mouseleave', scheduleClose);
+                toggle.addEventListener('focus', function() { setOpen(true); });
+                toggle.addEventListener('blur', scheduleClose);
+                panel.addEventListener('focusin', function() { setOpen(true); });
+                panel.addEventListener('focusout', scheduleClose);
+            } else {
+                toggle.addEventListener('click', function() {
+                    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

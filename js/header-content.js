@@ -3,7 +3,6 @@ const headerContent = `<header>
     <div class="header-content">
         <nav>
             <a href="books.html">Books</a>
-            <a href="predictions.html">Predictions</a>
         </nav>
     </div>
 </header>`;
