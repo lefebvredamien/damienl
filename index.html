@@ -213,6 +213,7 @@
             left: 50%;
             transform: translateX(-50%);
             width: max-content;
+            max-width: calc(100vw - 2rem);
             text-align: center;
             pointer-events: auto;
             padding: 0.85rem 1.35rem 1rem;
@@ -236,7 +237,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.85rem 1.5rem;
             margin-top: 0.85rem;
         }
 
@@ -383,6 +385,263 @@
                 transform: scale(1.08);
             }
         }
+
+        .home-panel[hidden],
+        .home-panel-view[hidden] {
+            display: none !important;
+        }
+
+        .home-panel {
+            --text-primary: #f2f1ec;
+            --text-secondary: rgba(242, 241, 236, 0.72);
+            --text-tertiary: rgba(242, 241, 236, 0.5);
+            --text-quaternary: rgba(242, 241, 236, 0.35);
+            --accent: #9aab8e;
+            --coming-soon-color-1: #2a2a26;
+            --coming-soon-color-2: #3a3a34;
+            position: fixed;
+            inset: 0;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            color: #f2f1ec;
+        }
+
+        .home-panel-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        .home-panel-sheet {
+            position: relative;
+            width: min(1100px, 100%);
+            max-height: min(88dvh, 920px);
+            overflow: auto;
+            overscroll-behavior: contain;
+            background: rgba(17, 17, 16, 0.92);
+            border: 1px solid rgba(242, 241, 236, 0.12);
+            border-radius: 14px;
+            padding: 1.15rem 2.25rem 2rem;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+            animation: rise 0.45s var(--ease) both;
+        }
+
+        .home-panel-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1.25rem;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            margin: -1.15rem -2.25rem 0.25rem;
+            padding: 0.85rem 1.15rem 0.65rem;
+            background: linear-gradient(to bottom, rgba(17, 17, 16, 0.98) 55%, rgba(17, 17, 16, 0));
+        }
+
+        .home-panel-close,
+        .home-panel-back {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(242, 241, 236, 0.7);
+            background: none;
+            border: none;
+            padding: 0.2rem 0.15rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .home-panel-back[hidden] {
+            display: none !important;
+        }
+
+        .home-panel-close:hover,
+        .home-panel-back:hover {
+            color: #f2f1ec;
+        }
+
+        .home-panel .page-intro {
+            margin: 0 0 2rem;
+        }
+
+        .home-panel .page-intro h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 3vw, 2.4rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .home-panel .trilogy-blurb p,
+        .home-panel .predictions-blurb p {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .home-panel .trilogy-blurb p + p,
+        .home-panel .predictions-blurb p + p {
+            margin-top: 0.65rem;
+        }
+
+        .home-panel .predictions-blurb {
+            max-width: 36rem;
+        }
+
+        .home-panel .trilogy-blurb a {
+            color: var(--text-secondary);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.18em;
+            transition: color 0.3s ease;
+        }
+
+        .home-panel .trilogy-blurb a:hover {
+            color: var(--accent);
+        }
+
+        .home-panel .books-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem 1.5rem;
+        }
+
+        .home-panel .book,
+        .home-panel .prediction {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .home-panel .book-cover-link {
+            text-decoration: none;
+            display: block;
+            width: 100%;
+        }
+
+        .home-panel .book-cover,
+        .home-panel .prediction-cover {
+            width: 100%;
+            aspect-ratio: 2/3;
+            background: linear-gradient(160deg, #2a2a26 0%, #3d3d36 100%);
+            overflow: hidden;
+            margin-bottom: 0.85rem;
+            position: relative;
+            display: block;
+            transition: transform 0.45s var(--ease);
+        }
+
+        .home-panel .prediction-cover {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(160deg, var(--coming-soon-color-1) 0%, var(--coming-soon-color-2) 100%);
+        }
+
+        .home-panel .book:hover .book-cover,
+        .home-panel .prediction:hover .prediction-cover {
+            transform: translateY(-4px);
+        }
+
+        .home-panel .book-cover img,
+        .home-panel .prediction-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .home-panel .coming-soon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .home-panel .book-info,
+        .home-panel .prediction-info {
+            text-align: left;
+            width: 100%;
+        }
+
+        .home-panel .book-title,
+        .home-panel .prediction-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .home-panel .prediction-title {
+            font-size: 1.2rem;
+        }
+
+        .home-panel .book-title-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .home-panel .book-title-link:hover {
+            color: var(--accent);
+        }
+
+        .home-panel .book-year,
+        .home-panel .prediction-year {
+            font-size: 0.8rem;
+            color: var(--text-quaternary);
+            font-weight: 300;
+            letter-spacing: 0.04em;
+        }
+
+        .home-panel .predictions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 240px));
+            gap: 2rem 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .home-panel .books-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .home-panel {
+                padding: 0.65rem;
+            }
+
+            .home-panel-sheet {
+                max-height: calc(100dvh - 1.3rem);
+                padding: 0.9rem 1.1rem 1.25rem;
+                border-radius: 12px;
+            }
+
+            .home-panel-bar {
+                margin: -0.9rem -1.1rem 0.15rem;
+                padding: 0.7rem 0.9rem 0.45rem;
+            }
+
+            .home-panel .predictions-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -396,7 +655,7 @@
                     <div class="home-identity">
                         <h1 class="home-brand" data-content="author-name">Damien Lefebvre</h1>
                         <nav class="home-links">
-                            <a href="books.html">Books</a>
+                            <button type="button" data-open-panel="books" aria-expanded="false" aria-controls="home-panel">Books</button>
                             <button type="button" id="home-social-toggle" aria-expanded="false" aria-controls="home-social">Social</button>
                         </nav>
                         <div class="home-social" id="home-social"></div>
@@ -410,6 +669,29 @@
                 <div id="footer-social-placeholder"></div>
                 <p>&copy; <span id="copyright-year"></span></p>
             </footer>
+        </div>
+    </div>
+    <div class="home-panel" id="home-panel" hidden>
+        <div class="home-panel-backdrop" data-close-panel></div>
+        <div class="home-panel-sheet" id="home-panel-sheet" role="dialog" aria-modal="true">
+            <div class="home-panel-bar">
+                <button type="button" class="home-panel-back" data-panel-back hidden>Back</button>
+                <button type="button" class="home-panel-close" data-close-panel>Close</button>
+            </div>
+            <div class="home-panel-view" id="home-panel-books" hidden>
+                <div class="page-intro">
+                    <h2 id="home-panel-books-title">Books</h2>
+                    <div class="trilogy-blurb" id="trilogy-blurb"></div>
+                </div>
+                <div class="books-grid" id="books-grid"></div>
+            </div>
+            <div class="home-panel-view" id="home-panel-predictions" hidden>
+                <div class="page-intro">
+                    <h2 id="home-panel-predictions-title">Predictions</h2>
+                    <div class="predictions-blurb" id="predictions-blurb"></div>
+                </div>
+                <div class="predictions-grid" id="predictions-grid"></div>
+            </div>
         </div>
     </div>
     <script src="js/theme.js"></script>
@@ -454,6 +736,127 @@
                     setOpen(toggle.getAttribute('aria-expanded') !== 'true');
                 });
             }
+        })();
+
+        (function() {
+            const panel = document.getElementById('home-panel');
+            const sheet = document.getElementById('home-panel-sheet');
+            const views = {
+                books: document.getElementById('home-panel-books'),
+                predictions: document.getElementById('home-panel-predictions')
+            };
+            const triggers = document.querySelectorAll('[data-open-panel]');
+            let lastTrigger = null;
+            let active = null;
+
+            function setExpanded(name) {
+                triggers.forEach(function(btn) {
+                    btn.setAttribute('aria-expanded', btn.getAttribute('data-open-panel') === name ? 'true' : 'false');
+                });
+            }
+
+            function show(name) {
+                if (!views[name]) return;
+                Object.keys(views).forEach(function(key) {
+                    views[key].hidden = key !== name;
+                });
+                const title = views[name].querySelector('h2');
+                if (title) sheet.setAttribute('aria-labelledby', title.id);
+                const backBtn = sheet.querySelector('[data-panel-back]');
+                if (backBtn) backBtn.hidden = name !== 'predictions';
+                const socialToggle = document.getElementById('home-social-toggle');
+                const socialPanel = document.getElementById('home-social');
+                if (socialToggle && socialPanel) {
+                    socialToggle.setAttribute('aria-expanded', 'false');
+                    socialPanel.classList.remove('is-open');
+                }
+                panel.hidden = false;
+                active = name;
+                setExpanded(name);
+                const closeBtn = sheet.querySelector('.home-panel-close');
+                if (closeBtn) closeBtn.focus();
+            }
+
+            function hide() {
+                if (panel.hidden) return;
+                panel.hidden = true;
+                active = null;
+                setExpanded('');
+                if (lastTrigger) lastTrigger.focus();
+            }
+
+            function open(name, trigger) {
+                if (trigger) lastTrigger = trigger;
+                if (location.hash !== '#' + name) {
+                    history.pushState({ panel: name }, '', '#' + name);
+                }
+                show(name);
+            }
+
+            function close() {
+                if (location.hash === '#books' || location.hash === '#predictions') {
+                    history.pushState(null, '', location.pathname + location.search);
+                }
+                hide();
+            }
+
+            function sync() {
+                const hash = location.hash.slice(1);
+                if (hash === 'books' || hash === 'predictions') {
+                    if (!lastTrigger) {
+                        lastTrigger = document.querySelector('[data-open-panel="' + hash + '"]');
+                    }
+                    show(hash);
+                } else if (active) {
+                    hide();
+                }
+            }
+
+            triggers.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const name = btn.getAttribute('data-open-panel');
+                    if (active === name) close();
+                    else open(name, btn);
+                });
+            });
+
+            panel.addEventListener('click', function(e) {
+                if (e.target.closest('[data-panel-back]')) {
+                    open('books');
+                    return;
+                }
+                if (e.target.closest('[data-close-panel]')) close();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (panel.hidden) return;
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                    close();
+                    return;
+                }
+                if (e.key !== 'Tab' || !active) return;
+                const closeBtn = sheet.querySelector('.home-panel-close');
+                const backBtn = sheet.querySelector('[data-panel-back]');
+                const focusable = [];
+                if (backBtn && !backBtn.hidden) focusable.push(backBtn);
+                focusable.push(closeBtn);
+                focusable.push.apply(focusable, Array.from(views[active].querySelectorAll('a[href], button:not([disabled])')));
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (!first || !last) return;
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            });
+
+            window.addEventListener('hashchange', sync);
+            window.addEventListener('popstate', sync);
+            sync();
         })();
     </script>
 </body>
