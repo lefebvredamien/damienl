@@ -28,9 +28,9 @@ const siteContent = {
         ]
     },
     trilogy: {
-        description: ["<em>The Road We Pave</em> is a collection of short stories following ambitious characters throughout Europe.",
-            "Parts I and II flow chronologically; <em>All that we felt</em> is a prequel spinoff. <em>Timefall</em> is a standalone short story.",
-            "Find my Predictions <a href=\"predictions.html\">here</a>.",
+        description: ["<em>The Road We Pave</em> is a collection of short stories following resourceful characters throughout Europe.",
+            "Parts I and II flow chronologically; <em>All that we felt</em> is a prequel spinoff.",
+            "<em>Timefall</em> is a standalone short story, and you can find my annual predictions <a href=\"predictions.html\">here</a>.",
         ]
     },
     journey: [],
