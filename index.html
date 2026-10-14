@@ -425,7 +425,7 @@
             background: rgba(17, 17, 16, 0.92);
             border: 1px solid rgba(242, 241, 236, 0.12);
             border-radius: 14px;
-            padding: 1.15rem 2.25rem 2rem;
+            padding: 0 2.25rem 2rem;
             box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
             animation: rise 0.45s var(--ease) both;
         }
@@ -438,8 +438,8 @@
             position: sticky;
             top: 0;
             z-index: 2;
-            margin: -1.15rem -2.25rem 0.25rem;
-            padding: 0.85rem 1.15rem 0.65rem;
+            margin: 0 -2.25rem 0;
+            padding: 1.2rem 2.25rem;
             background: linear-gradient(to bottom, rgba(17, 17, 16, 0.98) 55%, rgba(17, 17, 16, 0));
         }
 
@@ -616,6 +616,72 @@
             gap: 2rem 1.5rem;
         }
 
+        .home-panel-back {
+            margin-right: auto;
+        }
+
+        .home-panel .book-content {
+            display: grid;
+            grid-template-columns: minmax(180px, 260px) 1fr;
+            gap: 2.5rem;
+            align-items: start;
+            margin-bottom: 0.5rem;
+        }
+
+        .home-panel .book-details {
+            min-width: 0;
+        }
+
+        .home-panel .book-content .book-cover {
+            margin-bottom: 0;
+        }
+
+        .home-panel .book-content .book-cover.coming-soon-cover {
+            background: linear-gradient(160deg, var(--coming-soon-color-1) 0%, var(--coming-soon-color-2) 100%);
+        }
+
+        .home-panel .book-details h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 3vw, 2.4rem);
+            font-weight: 400;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .home-panel .book-content .book-year {
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .home-panel .book-summary {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 38rem;
+        }
+
+        .home-panel .pdf-link {
+            display: inline-block;
+            padding: 0.75rem 1.35rem;
+            background: #f2f1ec;
+            border: none;
+            color: #161614;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .home-panel .pdf-link:hover {
+            background: #c4a574;
+            color: #161614;
+        }
+
         @media (max-width: 900px) {
             .home-panel .books-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -629,17 +695,36 @@
 
             .home-panel-sheet {
                 max-height: calc(100dvh - 1.3rem);
-                padding: 0.9rem 1.1rem 1.25rem;
+                padding: 0 1.1rem 1.25rem;
                 border-radius: 12px;
             }
 
             .home-panel-bar {
-                margin: -0.9rem -1.1rem 0.15rem;
-                padding: 0.7rem 0.9rem 0.45rem;
+                margin: 0 -1.1rem 0;
+                padding: 1.05rem 1.1rem;
             }
 
             .home-panel .predictions-grid {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .home-panel .book-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .home-panel .book-content .book-cover {
+                max-width: 200px;
+                width: 100%;
+                justify-self: center;
+            }
+
+            .home-panel .book-summary {
+                text-align: justify;
+            }
+
+            .home-panel .book-details h2 {
+                font-size: 1.75rem;
             }
         }
     </style>
@@ -684,6 +769,19 @@
                     <div class="trilogy-blurb" id="trilogy-blurb"></div>
                 </div>
                 <div class="books-grid" id="books-grid"></div>
+            </div>
+            <div class="home-panel-view" id="home-panel-book" hidden>
+                <div class="book-content">
+                    <div class="book-cover" id="panel-book-cover-wrap">
+                        <img id="panel-book-cover" alt="">
+                    </div>
+                    <div class="book-details">
+                        <h2 id="home-panel-book-title"></h2>
+                        <p class="book-year" id="panel-book-year"></p>
+                        <div class="book-summary" id="panel-book-summary"></div>
+                        <a href="#" id="panel-book-pdf" class="pdf-link" target="_blank" rel="noopener">Read PDF</a>
+                    </div>
+                </div>
             </div>
             <div class="home-panel-view" id="home-panel-predictions" hidden>
                 <div class="page-intro">
@@ -743,27 +841,90 @@
             const sheet = document.getElementById('home-panel-sheet');
             const views = {
                 books: document.getElementById('home-panel-books'),
+                book: document.getElementById('home-panel-book'),
                 predictions: document.getElementById('home-panel-predictions')
             };
             const triggers = document.querySelectorAll('[data-open-panel]');
+            const pdfLink = document.getElementById('panel-book-pdf');
             let lastTrigger = null;
             let active = null;
 
+            function bookById(id) {
+                if (typeof siteContent === 'undefined' || !siteContent.books) return null;
+                return siteContent.books.find(function(book) { return book.id === id; }) || null;
+            }
+
             function setExpanded(name) {
                 triggers.forEach(function(btn) {
-                    btn.setAttribute('aria-expanded', btn.getAttribute('data-open-panel') === name ? 'true' : 'false');
+                    const openName = name === 'books' || bookById(name) ? 'books' : name;
+                    btn.setAttribute('aria-expanded', btn.getAttribute('data-open-panel') === openName ? 'true' : 'false');
                 });
             }
 
+            function setPageTitle(name) {
+                if (typeof siteContent === 'undefined') return;
+                const book = bookById(name);
+                document.title = book ? book.title + ' - ' + siteContent.author.name : siteContent.author.name;
+            }
+
+            function fillBook(book) {
+                const title = document.getElementById('home-panel-book-title');
+                const year = document.getElementById('panel-book-year');
+                const summary = document.getElementById('panel-book-summary');
+                const coverWrap = document.getElementById('panel-book-cover-wrap');
+                const cover = document.getElementById('panel-book-cover');
+                title.textContent = book.title;
+                year.textContent = book.year;
+                summary.replaceChildren();
+                const paragraph = document.createElement('p');
+                paragraph.textContent = book.summary;
+                summary.appendChild(paragraph);
+                let soon = coverWrap.querySelector('.coming-soon');
+                if (book.coverImage) {
+                    cover.style.display = 'block';
+                    cover.src = book.coverImage;
+                    cover.alt = book.title;
+                    coverWrap.classList.remove('coming-soon-cover');
+                    if (soon) soon.style.display = 'none';
+                } else {
+                    cover.style.display = 'none';
+                    cover.removeAttribute('src');
+                    cover.alt = '';
+                    coverWrap.classList.add('coming-soon-cover');
+                    if (!soon) {
+                        soon = document.createElement('div');
+                        soon.className = 'coming-soon';
+                        soon.textContent = 'Coming Soon';
+                        coverWrap.appendChild(soon);
+                    }
+                    soon.style.display = 'flex';
+                }
+                if (book.pdfLink && book.coverImage) {
+                    pdfLink.style.display = 'inline-block';
+                    pdfLink.setAttribute('data-pdf', book.pdfLink);
+                } else {
+                    pdfLink.style.display = 'none';
+                    pdfLink.removeAttribute('data-pdf');
+                }
+            }
+
+            function viewFor(name) {
+                if (bookById(name)) return views.book;
+                return views[name] || null;
+            }
+
             function show(name) {
-                if (!views[name]) return;
+                const view = viewFor(name);
+                if (!view) return;
+                const book = bookById(name);
+                if (book) fillBook(book);
                 Object.keys(views).forEach(function(key) {
-                    views[key].hidden = key !== name;
+                    views[key].hidden = views[key] !== view;
                 });
-                const title = views[name].querySelector('h2');
+                const title = view.querySelector('h2');
                 if (title) sheet.setAttribute('aria-labelledby', title.id);
                 const backBtn = sheet.querySelector('[data-panel-back]');
-                if (backBtn) backBtn.hidden = name !== 'predictions';
+                if (backBtn) backBtn.hidden = !(name === 'predictions' || book);
                 const socialToggle = document.getElementById('home-social-toggle');
                 const socialPanel = document.getElementById('home-social');
                 if (socialToggle && socialPanel) {
@@ -771,8 +932,10 @@
                     socialPanel.classList.remove('is-open');
                 }
                 panel.hidden = false;
+                sheet.scrollTop = 0;
                 active = name;
                 setExpanded(name);
+                setPageTitle(name);
                 const closeBtn = sheet.querySelector('.home-panel-close');
                 if (closeBtn) closeBtn.focus();
             }
@@ -794,21 +957,24 @@
             }
 
             function close() {
-                if (location.hash === '#books' || location.hash === '#predictions') {
+                const hash = location.hash.slice(1);
+                if (hash === 'books' || hash === 'predictions' || bookById(hash)) {
                     history.pushState(null, '', location.pathname + location.search);
                 }
                 hide();
+                setPageTitle('');
             }
 
             function sync() {
                 const hash = location.hash.slice(1);
-                if (hash === 'books' || hash === 'predictions') {
+                if (hash === 'books' || hash === 'predictions' || bookById(hash)) {
                     if (!lastTrigger) {
-                        lastTrigger = document.querySelector('[data-open-panel="' + hash + '"]');
+                        lastTrigger = document.querySelector('[data-open-panel="' + (bookById(hash) ? 'books' : hash) + '"]');
                     }
                     show(hash);
                 } else if (active) {
                     hide();
+                    setPageTitle('');
                 }
             }
 
@@ -841,7 +1007,12 @@
                 const focusable = [];
                 if (backBtn && !backBtn.hidden) focusable.push(backBtn);
                 focusable.push(closeBtn);
-                focusable.push.apply(focusable, Array.from(views[active].querySelectorAll('a[href], button:not([disabled])')));
+                const activeView = viewFor(active);
+                if (activeView) {
+                    focusable.push.apply(focusable, Array.from(activeView.querySelectorAll('a[href], button:not([disabled])')).filter(function(el) {
+                        return el.getClientRects().length > 0;
+                    }));
+                }
                 const first = focusable[0];
                 const last = focusable[focusable.length - 1];
                 if (!first || !last) return;
@@ -852,6 +1023,20 @@
                     e.preventDefault();
                     first.focus();
                 }
+            });
+
+            pdfLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const link = pdfLink.getAttribute('data-pdf');
+                if (!link) return;
+                const password = prompt('Please enter the password to access the PDF:');
+                if (password === null) return;
+                if (password !== String.fromCharCode(77, 111, 110, 97, 99, 111)) {
+                    alert('Incorrect password. Please try again.');
+                    return;
+                }
+                window.open(link, '_blank', 'noopener');
             });
 
             window.addEventListener('hashchange', sync);

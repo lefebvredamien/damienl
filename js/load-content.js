@@ -140,13 +140,13 @@
                 const coverClass = hasCover ? 'book-cover' : 'book-cover coming-soon-cover';
                 return `
                 <div class="book">
-                    <a href="${book.id}.html" class="book-cover-link">
+                    <a href="#${book.id}" class="book-cover-link">
                         <div class="${coverClass}">
                             ${hasCover ? `<img src="${book.coverImage}" alt="${book.title}" onerror="this.style.display='none';">` : '<div class="coming-soon">Coming Soon</div>'}
                         </div>
                     </a>
                     <div class="book-info">
-                        <a href="${book.id}.html" class="book-title-link">
+                        <a href="#${book.id}" class="book-title-link">
                             <h2 class="book-title">${book.title}</h2>
                         </a>
                         <p class="book-year">${book.year}</p>
@@ -261,7 +261,8 @@
         }
 
         if (currentFile === 'index.html' || currentFile === '') {
-            document.title = siteContent.author.name;
+            const hashedBook = siteContent.books.find(b => b.id === location.hash.slice(1));
+            document.title = hashedBook ? `${hashedBook.title} - ${siteContent.author.name}` : siteContent.author.name;
         } else if (currentFile === 'books.html') {
             document.title = `Books - ${siteContent.author.name}`;
         } else if (currentFile === 'predictions.html') {
