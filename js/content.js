@@ -2,13 +2,6 @@ const siteContent = {
     author: {
         name: "Damien Lefebvre",
         profileImage: "images/profile_2.JPG",
-        description: [
-            "Stories and yearly predictions."
-        ],
-        workLink: {
-            text: "Books",
-            url: "index.html#books"
-        },
         cities: [
             {
                 name: "Los Angeles",
@@ -33,7 +26,6 @@ const siteContent = {
             "<em>Timefall</em> is a standalone short story, and you can find my annual predictions <a href=\"#predictions\">here</a>.",
         ]
     },
-    journey: [],
     books: [
         {
             id: "book1",
