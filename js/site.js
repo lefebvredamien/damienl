@@ -201,6 +201,9 @@
         };
         const triggers = document.querySelectorAll('[data-open-panel]');
         const pdfLink = document.getElementById('panel-book-pdf');
+        const kindleBtn = document.getElementById('panel-book-kindle');
+        const kindleSteps = document.getElementById('panel-book-kindle-steps');
+        const kindleDownload = document.getElementById('panel-book-kindle-download');
         let lastTrigger = null;
         let active = null;
 
@@ -254,6 +257,17 @@
             } else {
                 pdfLink.style.display = 'none';
                 pdfLink.removeAttribute('data-pdf');
+            }
+            const kindleFile = book.coverImage ? (book.epubLink || book.pdfLink) : null;
+            kindleSteps.hidden = true;
+            kindleBtn.setAttribute('aria-expanded', 'false');
+            if (kindleFile) {
+                kindleBtn.style.display = 'inline-block';
+                kindleDownload.setAttribute('data-file', kindleFile);
+                kindleDownload.textContent = book.epubLink ? 'Download the EPUB file' : 'Download the PDF file';
+            } else {
+                kindleBtn.style.display = 'none';
+                kindleDownload.removeAttribute('data-file');
             }
         }
 
@@ -381,6 +395,21 @@
                 return;
             }
             openProtected(link, 'Please enter the password to access the PDF:')(e);
+        });
+
+        kindleBtn.addEventListener('click', function () {
+            const open = kindleSteps.hidden;
+            kindleSteps.hidden = !open;
+            kindleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        kindleDownload.addEventListener('click', function (e) {
+            const link = kindleDownload.getAttribute('data-file');
+            if (!link) {
+                e.preventDefault();
+                return;
+            }
+            openProtected(link, 'Please enter the password to download the file:')(e);
         });
 
         window.addEventListener('hashchange', sync);

@@ -64,7 +64,17 @@
                         <h2 id="home-panel-book-title"></h2>
                         <p class="book-year" id="panel-book-year"></p>
                         <div class="book-summary" id="panel-book-summary"></div>
-                        <a href="#" id="panel-book-pdf" class="pdf-link" target="_blank" rel="noopener">Read PDF</a>
+                        <div class="book-actions">
+                            <a href="#" id="panel-book-pdf" class="pdf-link" target="_blank" rel="noopener">Read PDF</a>
+                            <button type="button" id="panel-book-kindle" class="pdf-link kindle-link" aria-expanded="false" aria-controls="panel-book-kindle-steps">Send to Kindle</button>
+                        </div>
+                        <div class="kindle-steps" id="panel-book-kindle-steps" hidden>
+                            <p><strong>Send to your Kindle in 2 quick steps:</strong></p>
+                            <ol>
+                                <li><a href="#" id="panel-book-kindle-download">Download the file</a> to your device.</li>
+                                <li>Open <a href="https://www.amazon.com/sendtokindle" target="_blank" rel="noopener">Amazon's Send to Kindle page</a> and drop the file in.</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
